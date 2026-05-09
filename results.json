@@ -1,0 +1,744 @@
+{
+  "timestamp": "2026-05-09T09:37:33.209525",
+  "num_queries": 10,
+  "evaluations": [
+    {
+      "query_id": "Q1",
+      "query": "What irrigation advice should be given for wheat during drought conditions in alluvial soil?",
+      "category": "irrigation",
+      "baseline": {
+        "relevance": 3,
+        "specificity": 2,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "gold_terms_matched": [],
+        "latency_s": 2.1e-05
+      },
+      "proposed": {
+        "relevance": 5,
+        "specificity": 4,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.829,
+        "precision": 0.333,
+        "recall": 1.0,
+        "f1": 0.5,
+        "gold_terms_matched": [
+          "21 das",
+          "7 cm"
+        ],
+        "latency_s": 0.000429,
+        "kg_advisories_found": 1,
+        "rag_avg_score": 0.3611
+      }
+    },
+    {
+      "query_id": "Q2",
+      "query": "How to manage pests in rice during the monsoon season?",
+      "category": "pest_control",
+      "baseline": {
+        "relevance": 2,
+        "specificity": 2,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "gold_terms_matched": [],
+        "latency_s": 1.1e-05
+      },
+      "proposed": {
+        "relevance": 5,
+        "specificity": 5,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.872,
+        "precision": 0.294,
+        "recall": 1.0,
+        "f1": 0.455,
+        "gold_terms_matched": [
+          "0.06%",
+          "0.1%",
+          "5 cm",
+          "carbendazim",
+          "tricyclazole"
+        ],
+        "latency_s": 0.000304,
+        "kg_advisories_found": 1,
+        "rag_avg_score": 0.2283
+      }
+    },
+    {
+      "query_id": "Q3",
+      "query": "What is the impact of heavy rainfall on rice and how to handle waterlogging?",
+      "category": "irrigation",
+      "baseline": {
+        "relevance": 3,
+        "specificity": 2,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "gold_terms_matched": [],
+        "latency_s": 8e-06
+      },
+      "proposed": {
+        "relevance": 4,
+        "specificity": 4,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.796,
+        "precision": 0.333,
+        "recall": 1.0,
+        "f1": 0.5,
+        "gold_terms_matched": [
+          "2%",
+          "urea"
+        ],
+        "latency_s": 0.000263,
+        "kg_advisories_found": 1,
+        "rag_avg_score": 0.3503
+      }
+    },
+    {
+      "query_id": "Q4",
+      "query": "Recommend fertilizer schedule for maize grown in red soil during monsoon.",
+      "category": "fertilizer",
+      "baseline": {
+        "relevance": 3,
+        "specificity": 2,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.0,
+        "precision": 1.0,
+        "recall": 0.286,
+        "f1": 0.444,
+        "gold_terms_matched": [
+          "fym",
+          "npk"
+        ],
+        "latency_s": 9e-06
+      },
+      "proposed": {
+        "relevance": 5,
+        "specificity": 5,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.849,
+        "precision": 0.636,
+        "recall": 1.0,
+        "f1": 0.778,
+        "gold_terms_matched": [
+          "10 tonnes",
+          "20 kg/ha",
+          "25 kg/ha",
+          "30 kg",
+          "fym",
+          "npk",
+          "zinc sulphate"
+        ],
+        "latency_s": 0.000326,
+        "kg_advisories_found": 1,
+        "rag_avg_score": 0.2826
+      }
+    },
+    {
+      "query_id": "Q5",
+      "query": "How to protect cotton from bollworm and whitefly infestation?",
+      "category": "pest_control",
+      "baseline": {
+        "relevance": 2,
+        "specificity": 2,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.0,
+        "precision": 1.0,
+        "recall": 0.286,
+        "f1": 0.444,
+        "gold_terms_matched": [
+          "neem",
+          "neem oil"
+        ],
+        "latency_s": 8e-06
+      },
+      "proposed": {
+        "relevance": 5,
+        "specificity": 5,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.866,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "gold_terms_matched": [
+          "0.2 g",
+          "5 ml/l",
+          "emamectin",
+          "neem",
+          "neem oil",
+          "pheromone",
+          "thiamethoxam"
+        ],
+        "latency_s": 0.000189,
+        "kg_advisories_found": 1,
+        "rag_avg_score": 0.2671
+      }
+    },
+    {
+      "query_id": "Q6",
+      "query": "What precautions should wheat farmers take during a cold wave?",
+      "category": "weather_protection",
+      "baseline": {
+        "relevance": 4,
+        "specificity": 1,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "gold_terms_matched": [],
+        "latency_s": 9e-06
+      },
+      "proposed": {
+        "relevance": 5,
+        "specificity": 4,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.804,
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.857,
+        "gold_terms_matched": [
+          "0.1%",
+          "0.5%",
+          "10 days",
+          "2%",
+          "kcl",
+          "urea"
+        ],
+        "latency_s": 0.000229,
+        "kg_advisories_found": 1,
+        "rag_avg_score": 0.297
+      }
+    },
+    {
+      "query_id": "Q7",
+      "query": "How to prevent late blight in tomato during foggy conditions?",
+      "category": "pest_control",
+      "baseline": {
+        "relevance": 2,
+        "specificity": 2,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "gold_terms_matched": [],
+        "latency_s": 7e-06
+      },
+      "proposed": {
+        "relevance": 5,
+        "specificity": 5,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.858,
+        "precision": 0.571,
+        "recall": 1.0,
+        "f1": 0.727,
+        "gold_terms_matched": [
+          "2.5 g",
+          "45 cm",
+          "mancozeb",
+          "metalaxyl"
+        ],
+        "latency_s": 0.00024,
+        "kg_advisories_found": 1,
+        "rag_avg_score": 0.222
+      }
+    },
+    {
+      "query_id": "Q8",
+      "query": "What irrigation management is needed for sugarcane during heat waves?",
+      "category": "irrigation",
+      "baseline": {
+        "relevance": 3,
+        "specificity": 2,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "gold_terms_matched": [],
+        "latency_s": 6e-06
+      },
+      "proposed": {
+        "relevance": 5,
+        "specificity": 4,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.848,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.667,
+        "gold_terms_matched": [
+          "10 cm",
+          "2%",
+          "7 days",
+          "kaolin"
+        ],
+        "latency_s": 0.000262,
+        "kg_advisories_found": 1,
+        "rag_avg_score": 0.2718
+      }
+    },
+    {
+      "query_id": "Q9",
+      "query": "How to manage maize crop during prolonged drought in red soil regions?",
+      "category": "irrigation",
+      "baseline": {
+        "relevance": 3,
+        "specificity": 2,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "gold_terms_matched": [],
+        "latency_s": 7e-06
+      },
+      "proposed": {
+        "relevance": 5,
+        "specificity": 5,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.829,
+        "precision": 0.273,
+        "recall": 1.0,
+        "f1": 0.429,
+        "gold_terms_matched": [
+          "6%",
+          "60%",
+          "kaolin"
+        ],
+        "latency_s": 0.000644,
+        "kg_advisories_found": 1,
+        "rag_avg_score": 0.3086
+      }
+    },
+    {
+      "query_id": "Q10",
+      "query": "What fertilizer recommendations exist for rice in alluvial soil during monsoon?",
+      "category": "fertilizer",
+      "baseline": {
+        "relevance": 3,
+        "specificity": 2,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.0,
+        "precision": 0.5,
+        "recall": 0.091,
+        "f1": 0.154,
+        "gold_terms_matched": [
+          "npk"
+        ],
+        "latency_s": 9e-06
+      },
+      "proposed": {
+        "relevance": 5,
+        "specificity": 5,
+        "clarity": 5,
+        "hallucination": "No",
+        "hallucination_flags": [],
+        "grounding": 0.864,
+        "precision": 0.647,
+        "recall": 1.0,
+        "f1": 0.786,
+        "gold_terms_matched": [
+          "25 kg/ha",
+          "25%",
+          "40 kg/ha",
+          "45 days",
+          "50%",
+          "dhaincha",
+          "lcc",
+          "leaf color chart",
+          "npk",
+          "sesbania",
+          "zinc sulphate"
+        ],
+        "latency_s": 0.000329,
+        "kg_advisories_found": 1,
+        "rag_avg_score": 0.2907
+      }
+    }
+  ],
+  "transcripts": [
+    {
+      "query_id": "Q1",
+      "query": "What irrigation advice should be given for wheat during drought conditions in alluvial soil?",
+      "category": "irrigation",
+      "expected_crop": "Wheat",
+      "expected_condition": "Drought / Dry Spell",
+      "baseline_response": "**Irrigation Advisory:**\n\nFor drought or water-stress conditions, the following general practices are recommended:\n\n1. Irrigate the crop at critical growth stages to minimize yield loss.\n2. Use water-efficient irrigation methods such as drip or sprinkler systems.\n3. Apply mulching to conserve soil moisture and reduce evaporation.\n4. Avoid waterlogging by ensuring proper drainage in the field.\n5. Monitor soil moisture regularly and irrigate when the top 5 cm of soil becomes dry.\n\nThese are general guidelines. Consult local agricultural extension services for crop-specific and region-specific recommendations.",
+      "baseline_latency_s": 2.1e-05,
+      "proposed_response": "**Advisory for Wheat during Drought (Alluvial soil) \u2014 Category: Irrigation**\n\n**Reasoning (from Knowledge Graph):**\n- Found crop: Wheat (crop_wheat)\n- Found 4 weather impacts on Wheat\n- Found 1 suitable soils for Wheat\n- Filtered advisories by weather: Drought \u2192 1 matches\n- Filtered advisories by category: irrigation \u2192 1 matches\n- Weather 'Drought' causes: soil_moisture_deficit, crop_wilting\n\n**Why this matters:** Drought on Wheat causes *wilting, reduced yield* (recorded conditions: temp 40\u00b0C, rainfall 0mm).\n\n**Expert Recommendation (from KG-linked advisories):**\n\n[Irrigation | Drought / Dry Spell | Alluvial Soil]\nDuring drought conditions, provide supplemental irrigation to wheat at critical growth stages \u2014 crown root initiation (21 DAS), tillering, jointing, flowering, and grain filling. Use sprinkler irrigation if available to optimize water usage. Apply mulch (5-7 cm) to conserve soil moisture. Avoid flood irrigation to prevent water wastage.\n\n**Additional Retrieved Evidence (RAG, top hits):**\n\n- (relevance 0.330) Crop: Maize | Category: irrigation | Weather: Drought / Dry Spell | Soil: Red Soil\nAdvisory: During drought, maize in red soil requires critical irrigation at tasseling and silking stages. Use drip irrigation if available (saves 40-60% water). Apply organic mulch to reduce evaporation. Spray anti-transpirant (kaolin 6%) to reduce water loss from leaves. If prolonged drought is expected, consider short-duration varieties for the next season.\n\n- (relevance 0.235) Soil: Alluvial Soil | Type: loamy | pH Range: 6.5-7.5 | Fertility: high | Water Retention: moderate | Suitable Crops: wheat, rice, maize, sugarcane\n\n**Soil Considerations:**\n- Alluvial Soil (loamy, fertility=high): loamy texture, good fertility\n\n**Watch for these downstream effects:** soil moisture deficit, crop wilting.\n\n*This advisory is grounded in the Agricultural Knowledge Graph and expert advisory corpus. KG reasoning path is shown above for transparency.*",
+      "proposed_latency_s": 0.000429,
+      "proposed_entities_extracted": {
+        "crop": "Wheat",
+        "weather": "Drought",
+        "soil": "Alluvial",
+        "category": "irrigation"
+      },
+      "proposed_kg_reasoning_path": [
+        "Found crop: Wheat (crop_wheat)",
+        "Found 4 weather impacts on Wheat",
+        "Found 1 suitable soils for Wheat",
+        "Filtered advisories by weather: Drought \u2192 1 matches",
+        "Filtered advisories by category: irrigation \u2192 1 matches",
+        "Weather 'Drought' causes: soil_moisture_deficit, crop_wilting"
+      ],
+      "proposed_kg_advisories_found": 1,
+      "proposed_rag_top_ids": [
+        "adv_wheat_irrigation",
+        "adv_maize_drought",
+        "soil_alluvial"
+      ],
+      "proposed_rag_avg_score": 0.3611
+    },
+    {
+      "query_id": "Q2",
+      "query": "How to manage pests in rice during the monsoon season?",
+      "category": "pest_control",
+      "expected_crop": "Rice",
+      "expected_condition": "Normal Monsoon",
+      "baseline_response": "**Pest and Disease Management Advisory:**\n\nFor effective pest and disease control, follow Integrated Pest Management (IPM):\n\n1. Monitor fields regularly for signs of pest or disease.\n2. Use cultural practices like crop rotation and resistant varieties.\n3. Apply biopesticides (e.g., neem oil) as the first line of defense.\n4. Use chemical pesticides only when the pest population exceeds the Economic Threshold Level (ETL).\n5. Maintain proper plant spacing for air circulation.\n6. Remove and destroy infected plant parts to prevent spread.\n\nThese are general guidelines. Specific pesticide recommendations depend on the crop, pest species, and local regulations.",
+      "baseline_latency_s": 1.1e-05,
+      "proposed_response": "**Advisory for Rice during Normal Monsoon \u2014 Category: Pest Control**\n\n**Reasoning (from Knowledge Graph):**\n- Found crop: Rice (crop_rice)\n- Found 2 weather impacts on Rice\n- Found 1 suitable soils for Rice\n- Filtered advisories by weather: Normal Monsoon \u2192 2 matches\n- Filtered advisories by category: pest_control \u2192 1 matches\n- Weather 'Normal Monsoon' causes: \n\n**Why this matters:** Normal Monsoon on Rice causes *favorable growth conditions* (recorded conditions: temp 30\u00b0C, rainfall 60mm).\n\n**Expert Recommendation (from KG-linked advisories):**\n\n[Pest Control | Normal Monsoon | Alluvial Soil]\nDuring monsoon, rice is susceptible to blast and sheath blight. Monitor fields weekly for lesion symptoms. Apply Tricyclazole (0.06%) or Carbendazim (0.1%) as preventive spray at tillering stage. Maintain 2-5 cm standing water. Remove and destroy infected plant debris. Use resistant varieties like Pusa Basmati 1509 where possible.\n\n**Additional Retrieved Evidence (RAG, top hits):**\n\n- (relevance 0.222) Crop: Rice | Category: fertilizer | Weather: Normal Monsoon | Soil: Alluvial Soil\nAdvisory: For rice in alluvial soil during normal monsoon, apply NPK at 120:60:40 kg/ha in splits \u2014 50% N as basal, 25% at tillering, 25% at panicle initiation. All P and K as basal. Use Leaf Color Chart (LCC) for need-based nitrogen application. Apply zinc sulphate (25 kg/ha) in zinc-deficient areas. Incorporate green manure (Sesbania/Dhaincha) 45 days before transplanting.\n\n- (relevance 0.191) Crop: Rice | Season: Kharif | Water Need: high | Preferred Soil: clayey | Temperature Range: 20-35\u00b0C | Common Diseases: blast, sheath_blight, brown_spot | Growth Stages: nursery, transplanting, tillering, flowering, maturity\n\n**Soil Considerations:**\n- Alluvial Soil (loamy, fertility=high): water retention, nutrient-rich\n\n*This advisory is grounded in the Agricultural Knowledge Graph and expert advisory corpus. KG reasoning path is shown above for transparency.*",
+      "proposed_latency_s": 0.000304,
+      "proposed_entities_extracted": {
+        "crop": "Rice",
+        "weather": "Normal Monsoon",
+        "soil": null,
+        "category": "pest_control"
+      },
+      "proposed_kg_reasoning_path": [
+        "Found crop: Rice (crop_rice)",
+        "Found 2 weather impacts on Rice",
+        "Found 1 suitable soils for Rice",
+        "Filtered advisories by weather: Normal Monsoon \u2192 2 matches",
+        "Filtered advisories by category: pest_control \u2192 1 matches",
+        "Weather 'Normal Monsoon' causes: "
+      ],
+      "proposed_kg_advisories_found": 1,
+      "proposed_rag_top_ids": [
+        "adv_rice_pest",
+        "adv_rice_fertilizer",
+        "crop_rice"
+      ],
+      "proposed_rag_avg_score": 0.2283
+    },
+    {
+      "query_id": "Q3",
+      "query": "What is the impact of heavy rainfall on rice and how to handle waterlogging?",
+      "category": "irrigation",
+      "expected_crop": "Rice",
+      "expected_condition": "Heavy Rainfall",
+      "baseline_response": "**Irrigation Advisory:**\n\nFor drought or water-stress conditions, the following general practices are recommended:\n\n1. Irrigate the crop at critical growth stages to minimize yield loss.\n2. Use water-efficient irrigation methods such as drip or sprinkler systems.\n3. Apply mulching to conserve soil moisture and reduce evaporation.\n4. Avoid waterlogging by ensuring proper drainage in the field.\n5. Monitor soil moisture regularly and irrigate when the top 5 cm of soil becomes dry.\n\nThese are general guidelines. Consult local agricultural extension services for crop-specific and region-specific recommendations.",
+      "baseline_latency_s": 8e-06,
+      "proposed_response": "**Advisory for Rice during Heavy Rainfall \u2014 Category: Irrigation**\n\n**Reasoning (from Knowledge Graph):**\n- Found crop: Rice (crop_rice)\n- Found 2 weather impacts on Rice\n- Found 1 suitable soils for Rice\n- Filtered advisories by weather: Heavy Rainfall \u2192 1 matches\n- Filtered advisories by category: irrigation \u2192 1 matches\n- Weather 'Heavy Rainfall' causes: waterlogging, nutrient_leaching\n\n**Why this matters:** Heavy Rainfall on Rice causes *waterlogging risk, disease spread* (recorded conditions: temp 28\u00b0C, rainfall 150mm).\n\n**Expert Recommendation (from KG-linked advisories):**\n\n[Irrigation | Heavy Rainfall | Alluvial Soil]\nDuring heavy rainfall, ensure proper drainage channels are functional to prevent prolonged waterlogging beyond 48 hours. Waterlogging at flowering stage causes significant yield loss. After water recedes, apply foliar spray of 2% urea to revive stressed plants. Check for brown spot disease which thrives in post-flood conditions.\n\n**Additional Retrieved Evidence (RAG, top hits):**\n\n- (relevance 0.462) Weather: Heavy Rainfall | Rainfall: 150mm | Humidity: 90% | Temp: 28\u00b0C | Wind: 20kph | Impact: waterlogging, disease spread, nutrient leaching\n\n- (relevance 0.164) Weather: Normal Monsoon | Rainfall: 60mm | Humidity: 75% | Temp: 30\u00b0C | Wind: 10kph | Impact: favorable for kharif crops\n\n**Soil Considerations:**\n- Alluvial Soil (loamy, fertility=high): water retention, nutrient-rich\n\n**Watch for these downstream effects:** waterlogging, nutrient leaching.\n\n*This advisory is grounded in the Agricultural Knowledge Graph and expert advisory corpus. KG reasoning path is shown above for transparency.*",
+      "proposed_latency_s": 0.000263,
+      "proposed_entities_extracted": {
+        "crop": "Rice",
+        "weather": "Heavy Rainfall",
+        "soil": null,
+        "category": "irrigation"
+      },
+      "proposed_kg_reasoning_path": [
+        "Found crop: Rice (crop_rice)",
+        "Found 2 weather impacts on Rice",
+        "Found 1 suitable soils for Rice",
+        "Filtered advisories by weather: Heavy Rainfall \u2192 1 matches",
+        "Filtered advisories by category: irrigation \u2192 1 matches",
+        "Weather 'Heavy Rainfall' causes: waterlogging, nutrient_leaching"
+      ],
+      "proposed_kg_advisories_found": 1,
+      "proposed_rag_top_ids": [
+        "weather_heavy_rain",
+        "adv_rice_heavy_rain",
+        "weather_normal_monsoon"
+      ],
+      "proposed_rag_avg_score": 0.3503
+    },
+    {
+      "query_id": "Q4",
+      "query": "Recommend fertilizer schedule for maize grown in red soil during monsoon.",
+      "category": "fertilizer",
+      "expected_crop": "Maize",
+      "expected_condition": "Normal Monsoon",
+      "baseline_response": "**Fertilizer Advisory:**\n\nFor optimal crop nutrition, follow these general recommendations:\n\n1. Apply NPK fertilizers based on soil test results.\n2. Use split application \u2014 apply nitrogen in 2-3 doses for better utilization.\n3. Apply phosphorus and potassium as basal dose at sowing.\n4. Supplement with organic matter (FYM/compost) for soil health.\n5. Correct micronutrient deficiencies based on visual symptoms.\n6. Avoid over-fertilization to prevent environmental pollution.\n\nSpecific doses depend on the crop, soil type, and expected yield. Consult your local soil testing laboratory for precise recommendations.",
+      "baseline_latency_s": 9e-06,
+      "proposed_response": "**Advisory for Maize during Normal Monsoon (Red soil) \u2014 Category: Fertilizer**\n\n**Reasoning (from Knowledge Graph):**\n- Found crop: Maize (crop_maize)\n- Found 2 weather impacts on Maize\n- Found 2 suitable soils for Maize\n- Filtered advisories by weather: Normal Monsoon \u2192 1 matches\n- Filtered advisories by category: fertilizer \u2192 1 matches\n- Weather 'Normal Monsoon' causes: \n\n**Why this matters:** Normal Monsoon on Maize causes *good vegetative growth* (recorded conditions: temp 30\u00b0C, rainfall 60mm).\n\n**Expert Recommendation (from KG-linked advisories):**\n\n[Fertilizer | Normal Monsoon | Red Soil]\nFor maize in red soil, apply NPK fertilizer in split doses: basal dose of 60:40:20 kg/ha at sowing, followed by 30 kg N/ha at knee-high stage and 30 kg N/ha at tasseling. Red soil is typically deficient in nitrogen and phosphorus \u2014 supplement with FYM (10 tonnes/ha) before sowing. Use zinc sulphate (25 kg/ha) to correct micronutrient deficiency.\n\n**Additional Retrieved Evidence (RAG, top hits):**\n\n- (relevance 0.242) Soil: Red Soil | Type: sandy_loam | pH Range: 5.5-6.5 | Fertility: low | Water Retention: low | Suitable Crops: maize, tomato\n\n- (relevance 0.225) Crop: Maize | Category: irrigation | Weather: Drought / Dry Spell | Soil: Red Soil\nAdvisory: During drought, maize in red soil requires critical irrigation at tasseling and silking stages. Use drip irrigation if available (saves 40-60% water). Apply organic mulch to reduce evaporation. Spray anti-transpirant (kaolin 6%) to reduce water loss from leaves. If prolonged drought is expected, consider short-duration varieties for the next season.\n\n**Soil Considerations:**\n- Red Soil (sandy_loam, fertility=low): well-drained, moderately fertile\n- Alluvial Soil (loamy, fertility=high): alternative: high fertility\n\n*This advisory is grounded in the Agricultural Knowledge Graph and expert advisory corpus. KG reasoning path is shown above for transparency.*",
+      "proposed_latency_s": 0.000326,
+      "proposed_entities_extracted": {
+        "crop": "Maize",
+        "weather": "Normal Monsoon",
+        "soil": "Red",
+        "category": "fertilizer"
+      },
+      "proposed_kg_reasoning_path": [
+        "Found crop: Maize (crop_maize)",
+        "Found 2 weather impacts on Maize",
+        "Found 2 suitable soils for Maize",
+        "Filtered advisories by weather: Normal Monsoon \u2192 1 matches",
+        "Filtered advisories by category: fertilizer \u2192 1 matches",
+        "Weather 'Normal Monsoon' causes: "
+      ],
+      "proposed_kg_advisories_found": 1,
+      "proposed_rag_top_ids": [
+        "adv_maize_fertilizer",
+        "soil_red",
+        "adv_maize_drought"
+      ],
+      "proposed_rag_avg_score": 0.2826
+    },
+    {
+      "query_id": "Q5",
+      "query": "How to protect cotton from bollworm and whitefly infestation?",
+      "category": "pest_control",
+      "expected_crop": "Cotton",
+      "expected_condition": "Normal Monsoon",
+      "baseline_response": "**Pest and Disease Management Advisory:**\n\nFor effective pest and disease control, follow Integrated Pest Management (IPM):\n\n1. Monitor fields regularly for signs of pest or disease.\n2. Use cultural practices like crop rotation and resistant varieties.\n3. Apply biopesticides (e.g., neem oil) as the first line of defense.\n4. Use chemical pesticides only when the pest population exceeds the Economic Threshold Level (ETL).\n5. Maintain proper plant spacing for air circulation.\n6. Remove and destroy infected plant parts to prevent spread.\n\nThese are general guidelines. Specific pesticide recommendations depend on the crop, pest species, and local regulations.",
+      "baseline_latency_s": 8e-06,
+      "proposed_response": "**Advisory for Cotton \u2014 Category: Pest Control**\n\n**Reasoning (from Knowledge Graph):**\n- Found crop: Cotton (crop_cotton)\n- Found 2 weather impacts on Cotton\n- Found 1 suitable soils for Cotton\n- Filtered advisories by category: pest_control \u2192 1 matches\n\n**Expert Recommendation (from KG-linked advisories):**\n\n[Pest Control | Normal Monsoon | Black Soil (Regur)]\nMonitor cotton fields for bollworm and whitefly from squaring stage onwards. Install pheromone traps (5/ha) for bollworm monitoring. Spray Neem oil (5 ml/L) as first line of defense. If pest population exceeds ETL (Economic Threshold Level), apply Emamectin benzoate (0.2 g/L). For whitefly, use yellow sticky traps and spray Thiamethoxam (0.2 g/L) if needed.\n\n**Additional Retrieved Evidence (RAG, top hits):**\n\n- (relevance 0.325) Crop: Cotton | Season: Kharif | Water Need: moderate | Preferred Soil: black_soil | Temperature Range: 21-35\u00b0C | Common Diseases: bollworm, whitefly, leaf_curl | Growth Stages: germination, squaring, flowering, boll_opening\n\n- (relevance 0.117) Soil: Black Soil (Regur) | Type: clayey | pH Range: 7.0-8.5 | Fertility: high | Water Retention: high | Suitable Crops: cotton, wheat, sugarcane\n\n**Soil Considerations:**\n- Black Soil (Regur) (clayey, fertility=high): high water retention, self-mulching\n\n*This advisory is grounded in the Agricultural Knowledge Graph and expert advisory corpus. KG reasoning path is shown above for transparency.*",
+      "proposed_latency_s": 0.000189,
+      "proposed_entities_extracted": {
+        "crop": "Cotton",
+        "weather": null,
+        "soil": null,
+        "category": "pest_control"
+      },
+      "proposed_kg_reasoning_path": [
+        "Found crop: Cotton (crop_cotton)",
+        "Found 2 weather impacts on Cotton",
+        "Found 1 suitable soils for Cotton",
+        "Filtered advisories by category: pest_control \u2192 1 matches"
+      ],
+      "proposed_kg_advisories_found": 1,
+      "proposed_rag_top_ids": [
+        "adv_cotton_pest",
+        "crop_cotton",
+        "soil_black"
+      ],
+      "proposed_rag_avg_score": 0.2671
+    },
+    {
+      "query_id": "Q6",
+      "query": "What precautions should wheat farmers take during a cold wave?",
+      "category": "weather_protection",
+      "expected_crop": "Wheat",
+      "expected_condition": "Cold Wave",
+      "baseline_response": "**Cold Wave / Frost Protection Advisory:**\n\nWhen cold wave or frost conditions are expected:\n\n1. Apply light irrigation to raise soil temperature.\n2. Cover sensitive crops with protective material if possible.\n3. Avoid nitrogen application during extreme cold.\n4. Postpone sowing until temperatures rise above safe thresholds.\n5. Monitor weather forecasts regularly.\n\nSpecific protection measures depend on the crop and stage of growth.",
+      "baseline_latency_s": 9e-06,
+      "proposed_response": "**Advisory for Wheat during Cold Wave \u2014 Category: Weather Protection**\n\n**Reasoning (from Knowledge Graph):**\n- Found crop: Wheat (crop_wheat)\n- Found 4 weather impacts on Wheat\n- Found 1 suitable soils for Wheat\n- Filtered advisories by weather: Cold Wave \u2192 1 matches\n- Filtered advisories by category: weather_protection \u2192 1 matches\n- Weather 'Cold Wave' causes: frost_damage\n\n**Why this matters:** Cold Wave on Wheat causes *frost damage at flowering* (recorded conditions: temp 4\u00b0C, rainfall 5mm).\n\n**Expert Recommendation (from KG-linked advisories):**\n\n[Weather Protection | Cold Wave | Alluvial Soil]\nDuring cold wave alerts, apply light irrigation in the evening to raise soil temperature and protect wheat from frost damage. Spray sulphuric acid (0.1%) solution for frost protection. Avoid nitrogen top-dressing during extreme cold. If frost damage has occurred, apply foliar spray of 0.5% KCl and 2% urea for recovery. Delay harvesting of frost-affected crop by 7-10 days.\n\n**Additional Retrieved Evidence (RAG, top hits):**\n\n- (relevance 0.332) Weather: Cold Wave | Rainfall: 5mm | Humidity: 60% | Temp: 4\u00b0C | Wind: 25kph | Impact: frost damage, delayed growth\n\n- (relevance 0.127) Soil: Alluvial Soil | Type: loamy | pH Range: 6.5-7.5 | Fertility: high | Water Retention: moderate | Suitable Crops: wheat, rice, maize, sugarcane\n\n**Soil Considerations:**\n- Alluvial Soil (loamy, fertility=high): loamy texture, good fertility\n\n**Watch for these downstream effects:** frost damage.\n\n*This advisory is grounded in the Agricultural Knowledge Graph and expert advisory corpus. KG reasoning path is shown above for transparency.*",
+      "proposed_latency_s": 0.000229,
+      "proposed_entities_extracted": {
+        "crop": "Wheat",
+        "weather": "Cold Wave",
+        "soil": null,
+        "category": "weather_protection"
+      },
+      "proposed_kg_reasoning_path": [
+        "Found crop: Wheat (crop_wheat)",
+        "Found 4 weather impacts on Wheat",
+        "Found 1 suitable soils for Wheat",
+        "Filtered advisories by weather: Cold Wave \u2192 1 matches",
+        "Filtered advisories by category: weather_protection \u2192 1 matches",
+        "Weather 'Cold Wave' causes: frost_damage"
+      ],
+      "proposed_kg_advisories_found": 1,
+      "proposed_rag_top_ids": [
+        "adv_wheat_cold",
+        "weather_cold_wave",
+        "soil_alluvial"
+      ],
+      "proposed_rag_avg_score": 0.297
+    },
+    {
+      "query_id": "Q7",
+      "query": "How to prevent late blight in tomato during foggy conditions?",
+      "category": "pest_control",
+      "expected_crop": "Tomato",
+      "expected_condition": "Fog / High Humidity",
+      "baseline_response": "**Pest and Disease Management Advisory:**\n\nFor effective pest and disease control, follow Integrated Pest Management (IPM):\n\n1. Monitor fields regularly for signs of pest or disease.\n2. Use cultural practices like crop rotation and resistant varieties.\n3. Apply biopesticides (e.g., neem oil) as the first line of defense.\n4. Use chemical pesticides only when the pest population exceeds the Economic Threshold Level (ETL).\n5. Maintain proper plant spacing for air circulation.\n6. Remove and destroy infected plant parts to prevent spread.\n\nThese are general guidelines. Specific pesticide recommendations depend on the crop, pest species, and local regulations.",
+      "baseline_latency_s": 7e-06,
+      "proposed_response": "**Advisory for Tomato during Fog \u2014 Category: Pest Control**\n\n**Reasoning (from Knowledge Graph):**\n- Found crop: Tomato (crop_tomato)\n- Found 2 weather impacts on Tomato\n- Found 1 suitable soils for Tomato\n- Filtered advisories by weather: Fog \u2192 1 matches\n- Filtered advisories by category: pest_control \u2192 1 matches\n- Weather 'Fog' causes: fungal_outbreak\n\n**Why this matters:** Fog on Tomato causes *fungal disease outbreak* (recorded conditions: temp 12\u00b0C, rainfall 2mm).\n\n**Expert Recommendation (from KG-linked advisories):**\n\n[Pest Control | Fog / High Humidity | Red Soil]\nFoggy and humid conditions favor late blight (Phytophthora infestans) in tomato. Apply Mancozeb (2.5 g/L) or Metalaxyl + Mancozeb combination as preventive spray at 10-day intervals. Ensure proper plant spacing (60x45 cm) for air circulation. Stake plants to keep foliage off the soil. Remove lower leaves touching the ground. Avoid overhead irrigation.\n\n**Additional Retrieved Evidence (RAG, top hits):**\n\n- (relevance 0.255) Crop: Tomato | Season: Rabi | Water Need: moderate | Preferred Soil: sandy_loam | Temperature Range: 15-30\u00b0C | Common Diseases: early_blight, late_blight, leaf_curl_virus | Growth Stages: seedling, vegetative, flowering, fruiting\n\n- (relevance 0.116) Crop: Rice | Category: irrigation | Weather: Heavy Rainfall | Soil: Alluvial Soil\nAdvisory: During heavy rainfall, ensure proper drainage channels are functional to prevent prolonged waterlogging beyond 48 hours. Waterlogging at flowering stage causes significant yield loss. After water recedes, apply foliar spray of 2% urea to revive stressed plants. Check for brown spot disease which thrives in post-flood conditions.\n\n**Soil Considerations:**\n- Red Soil (sandy_loam, fertility=low): well-drained sandy loam\n\n**Watch for these downstream effects:** fungal outbreak.\n\n*This advisory is grounded in the Agricultural Knowledge Graph and expert advisory corpus. KG reasoning path is shown above for transparency.*",
+      "proposed_latency_s": 0.00024,
+      "proposed_entities_extracted": {
+        "crop": "Tomato",
+        "weather": "Fog",
+        "soil": null,
+        "category": "pest_control"
+      },
+      "proposed_kg_reasoning_path": [
+        "Found crop: Tomato (crop_tomato)",
+        "Found 2 weather impacts on Tomato",
+        "Found 1 suitable soils for Tomato",
+        "Filtered advisories by weather: Fog \u2192 1 matches",
+        "Filtered advisories by category: pest_control \u2192 1 matches",
+        "Weather 'Fog' causes: fungal_outbreak"
+      ],
+      "proposed_kg_advisories_found": 1,
+      "proposed_rag_top_ids": [
+        "adv_tomato_blight",
+        "crop_tomato",
+        "adv_rice_heavy_rain"
+      ],
+      "proposed_rag_avg_score": 0.222
+    },
+    {
+      "query_id": "Q8",
+      "query": "What irrigation management is needed for sugarcane during heat waves?",
+      "category": "irrigation",
+      "expected_crop": "Sugarcane",
+      "expected_condition": "Heat Wave",
+      "baseline_response": "**Irrigation Advisory:**\n\nFor drought or water-stress conditions, the following general practices are recommended:\n\n1. Irrigate the crop at critical growth stages to minimize yield loss.\n2. Use water-efficient irrigation methods such as drip or sprinkler systems.\n3. Apply mulching to conserve soil moisture and reduce evaporation.\n4. Avoid waterlogging by ensuring proper drainage in the field.\n5. Monitor soil moisture regularly and irrigate when the top 5 cm of soil becomes dry.\n\nThese are general guidelines. Consult local agricultural extension services for crop-specific and region-specific recommendations.",
+      "baseline_latency_s": 6e-06,
+      "proposed_response": "**Advisory for Sugarcane during Heat Wave \u2014 Category: Irrigation**\n\n**Reasoning (from Knowledge Graph):**\n- Found crop: Sugarcane (crop_sugarcane)\n- Found 1 weather impacts on Sugarcane\n- Found 1 suitable soils for Sugarcane\n- Filtered advisories by weather: Heat Wave \u2192 1 matches\n- Filtered advisories by category: irrigation \u2192 1 matches\n- Weather 'Heat Wave' causes: heat_stress, pollen_sterility\n\n**Why this matters:** Heat Wave on Sugarcane causes *heat stress, increased water demand* (recorded conditions: temp 45\u00b0C, rainfall 0mm).\n\n**Expert Recommendation (from KG-linked advisories):**\n\n[Irrigation | Heat Wave | Alluvial Soil]\nDuring heat waves, increase irrigation frequency to every 7 days for sugarcane. Apply trash mulching (dried leaves, 10 cm layer) between rows to reduce soil temperature by 3-5\u00b0C. Irrigate during early morning or late evening. Avoid field operations during peak heat hours (12-3 PM). Spray 2% kaolin solution on leaves to reduce heat stress. Grand growth stage is most sensitive to heat stress.\n\n**Additional Retrieved Evidence (RAG, top hits):**\n\n- (relevance 0.218) Weather: Heat Wave | Rainfall: 0mm | Humidity: 20% | Temp: 45\u00b0C | Wind: 10kph | Impact: heat stress, pollen sterility, increased water demand\n\n- (relevance 0.140) Crop: Wheat | Category: irrigation | Weather: Drought / Dry Spell | Soil: Alluvial Soil\nAdvisory: During drought conditions, provide supplemental irrigation to wheat at critical growth stages \u2014 crown root initiation (21 DAS), tillering, jointing, flowering, and grain filling. Use sprinkler irrigation if available to optimize water usage. Apply mulch (5-7 cm) to conserve soil moisture. Avoid flood irrigation to prevent water wastage.\n\n**Soil Considerations:**\n- Alluvial Soil (loamy, fertility=high): deep loamy soil, nutrient-rich\n\n**Watch for these downstream effects:** heat stress, pollen sterility.\n\n*This advisory is grounded in the Agricultural Knowledge Graph and expert advisory corpus. KG reasoning path is shown above for transparency.*",
+      "proposed_latency_s": 0.000262,
+      "proposed_entities_extracted": {
+        "crop": "Sugarcane",
+        "weather": "Heat Wave",
+        "soil": null,
+        "category": "irrigation"
+      },
+      "proposed_kg_reasoning_path": [
+        "Found crop: Sugarcane (crop_sugarcane)",
+        "Found 1 weather impacts on Sugarcane",
+        "Found 1 suitable soils for Sugarcane",
+        "Filtered advisories by weather: Heat Wave \u2192 1 matches",
+        "Filtered advisories by category: irrigation \u2192 1 matches",
+        "Weather 'Heat Wave' causes: heat_stress, pollen_sterility"
+      ],
+      "proposed_kg_advisories_found": 1,
+      "proposed_rag_top_ids": [
+        "adv_sugarcane_heat",
+        "weather_heatwave",
+        "adv_wheat_irrigation"
+      ],
+      "proposed_rag_avg_score": 0.2718
+    },
+    {
+      "query_id": "Q9",
+      "query": "How to manage maize crop during prolonged drought in red soil regions?",
+      "category": "irrigation",
+      "expected_crop": "Maize",
+      "expected_condition": "Drought / Dry Spell",
+      "baseline_response": "**Irrigation Advisory:**\n\nFor drought or water-stress conditions, the following general practices are recommended:\n\n1. Irrigate the crop at critical growth stages to minimize yield loss.\n2. Use water-efficient irrigation methods such as drip or sprinkler systems.\n3. Apply mulching to conserve soil moisture and reduce evaporation.\n4. Avoid waterlogging by ensuring proper drainage in the field.\n5. Monitor soil moisture regularly and irrigate when the top 5 cm of soil becomes dry.\n\nThese are general guidelines. Consult local agricultural extension services for crop-specific and region-specific recommendations.",
+      "baseline_latency_s": 7e-06,
+      "proposed_response": "**Advisory for Maize during Drought (Red soil) \u2014 Category: General**\n\n**Reasoning (from Knowledge Graph):**\n- Found crop: Maize (crop_maize)\n- Found 2 weather impacts on Maize\n- Found 2 suitable soils for Maize\n- Filtered advisories by weather: Drought \u2192 1 matches\n- Weather 'Drought' causes: soil_moisture_deficit, crop_wilting\n\n**Why this matters:** Drought on Maize causes *pollen sterility, poor grain fill* (recorded conditions: temp 40\u00b0C, rainfall 0mm).\n\n**Expert Recommendation (from KG-linked advisories):**\n\n[Irrigation | Drought / Dry Spell | Red Soil]\nDuring drought, maize in red soil requires critical irrigation at tasseling and silking stages. Use drip irrigation if available (saves 40-60% water). Apply organic mulch to reduce evaporation. Spray anti-transpirant (kaolin 6%) to reduce water loss from leaves. If prolonged drought is expected, consider short-duration varieties for the next season.\n\n**Additional Retrieved Evidence (RAG, top hits):**\n\n- (relevance 0.227) Soil: Red Soil | Type: sandy_loam | pH Range: 5.5-6.5 | Fertility: low | Water Retention: low | Suitable Crops: maize, tomato\n\n- (relevance 0.219) Crop: Maize | Category: fertilizer | Weather: Normal Monsoon | Soil: Red Soil\nAdvisory: For maize in red soil, apply NPK fertilizer in split doses: basal dose of 60:40:20 kg/ha at sowing, followed by 30 kg N/ha at knee-high stage and 30 kg N/ha at tasseling. Red soil is typically deficient in nitrogen and phosphorus \u2014 supplement with FYM (10 tonnes/ha) before sowing. Use zinc sulphate (25 kg/ha) to correct micronutrient deficiency.\n\n**Soil Considerations:**\n- Red Soil (sandy_loam, fertility=low): well-drained, moderately fertile\n- Alluvial Soil (loamy, fertility=high): alternative: high fertility\n\n**Watch for these downstream effects:** soil moisture deficit, crop wilting.\n\n*This advisory is grounded in the Agricultural Knowledge Graph and expert advisory corpus. KG reasoning path is shown above for transparency.*",
+      "proposed_latency_s": 0.000644,
+      "proposed_entities_extracted": {
+        "crop": "Maize",
+        "weather": "Drought",
+        "soil": "Red",
+        "category": null
+      },
+      "proposed_kg_reasoning_path": [
+        "Found crop: Maize (crop_maize)",
+        "Found 2 weather impacts on Maize",
+        "Found 2 suitable soils for Maize",
+        "Filtered advisories by weather: Drought \u2192 1 matches",
+        "Weather 'Drought' causes: soil_moisture_deficit, crop_wilting"
+      ],
+      "proposed_kg_advisories_found": 1,
+      "proposed_rag_top_ids": [
+        "adv_maize_drought",
+        "soil_red",
+        "adv_maize_fertilizer"
+      ],
+      "proposed_rag_avg_score": 0.3086
+    },
+    {
+      "query_id": "Q10",
+      "query": "What fertilizer recommendations exist for rice in alluvial soil during monsoon?",
+      "category": "fertilizer",
+      "expected_crop": "Rice",
+      "expected_condition": "Normal Monsoon",
+      "baseline_response": "**Fertilizer Advisory:**\n\nFor optimal crop nutrition, follow these general recommendations:\n\n1. Apply NPK fertilizers based on soil test results.\n2. Use split application \u2014 apply nitrogen in 2-3 doses for better utilization.\n3. Apply phosphorus and potassium as basal dose at sowing.\n4. Supplement with organic matter (FYM/compost) for soil health.\n5. Correct micronutrient deficiencies based on visual symptoms.\n6. Avoid over-fertilization to prevent environmental pollution.\n\nSpecific doses depend on the crop, soil type, and expected yield. Consult your local soil testing laboratory for precise recommendations.",
+      "baseline_latency_s": 9e-06,
+      "proposed_response": "**Advisory for Rice during Normal Monsoon (Alluvial soil) \u2014 Category: Fertilizer**\n\n**Reasoning (from Knowledge Graph):**\n- Found crop: Rice (crop_rice)\n- Found 2 weather impacts on Rice\n- Found 1 suitable soils for Rice\n- Filtered advisories by weather: Normal Monsoon \u2192 2 matches\n- Filtered advisories by category: fertilizer \u2192 1 matches\n- Weather 'Normal Monsoon' causes: \n\n**Why this matters:** Normal Monsoon on Rice causes *favorable growth conditions* (recorded conditions: temp 30\u00b0C, rainfall 60mm).\n\n**Expert Recommendation (from KG-linked advisories):**\n\n[Fertilizer | Normal Monsoon | Alluvial Soil]\nFor rice in alluvial soil during normal monsoon, apply NPK at 120:60:40 kg/ha in splits \u2014 50% N as basal, 25% at tillering, 25% at panicle initiation. All P and K as basal. Use Leaf Color Chart (LCC) for need-based nitrogen application. Apply zinc sulphate (25 kg/ha) in zinc-deficient areas. Incorporate green manure (Sesbania/Dhaincha) 45 days before transplanting.\n\n**Additional Retrieved Evidence (RAG, top hits):**\n\n- (relevance 0.278) Crop: Rice | Category: pest_control | Weather: Normal Monsoon | Soil: Alluvial Soil\nAdvisory: During monsoon, rice is susceptible to blast and sheath blight. Monitor fields weekly for lesion symptoms. Apply Tricyclazole (0.06%) or Carbendazim (0.1%) as preventive spray at tillering stage. Maintain 2-5 cm standing water. Remove and destroy infected plant debris. Use resistant varieties like Pusa Basmati 1509 where possible.\n\n- (relevance 0.247) Soil: Alluvial Soil | Type: loamy | pH Range: 6.5-7.5 | Fertility: high | Water Retention: moderate | Suitable Crops: wheat, rice, maize, sugarcane\n\n**Soil Considerations:**\n- Alluvial Soil (loamy, fertility=high): water retention, nutrient-rich\n\n*This advisory is grounded in the Agricultural Knowledge Graph and expert advisory corpus. KG reasoning path is shown above for transparency.*",
+      "proposed_latency_s": 0.000329,
+      "proposed_entities_extracted": {
+        "crop": "Rice",
+        "weather": "Normal Monsoon",
+        "soil": "Alluvial",
+        "category": "fertilizer"
+      },
+      "proposed_kg_reasoning_path": [
+        "Found crop: Rice (crop_rice)",
+        "Found 2 weather impacts on Rice",
+        "Found 1 suitable soils for Rice",
+        "Filtered advisories by weather: Normal Monsoon \u2192 2 matches",
+        "Filtered advisories by category: fertilizer \u2192 1 matches",
+        "Weather 'Normal Monsoon' causes: "
+      ],
+      "proposed_kg_advisories_found": 1,
+      "proposed_rag_top_ids": [
+        "adv_rice_fertilizer",
+        "adv_rice_pest",
+        "soil_alluvial"
+      ],
+      "proposed_rag_avg_score": 0.2907
+    }
+  ],
+  "kg_stats": {
+    "total_nodes": 34,
+    "total_edges": 38,
+    "node_types": {
+      "crop": 6,
+      "soil": 4,
+      "weather": 6,
+      "advisory": 10,
+      "condition": 8
+    },
+    "edge_types": {
+      "requires": 7,
+      "affects": 13,
+      "causes": 8,
+      "recommended_for": 10
+    },
+    "density": 0.0338680926916221,
+    "is_dag": true
+  },
+  "elapsed_seconds": 0.0
+}
