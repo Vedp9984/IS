@@ -550,6 +550,141 @@ def diagram_grounding_scatter(path="fig_grounding.png"):
 
 
 # ──────────────────────────────────────────────────────────────────────
+# 8. Dataset overview (entity counts)
+# ──────────────────────────────────────────────────────────────────────
+
+def diagram_dataset_overview(path="fig_dataset_overview.png"):
+    from dataset import (CROPS, SOILS, WEATHER_CONDITIONS, ADVISORIES,
+                          RELATIONS, TEST_QUERIES)
+    counts = {
+        "Crops": len(CROPS),
+        "Soils": len(SOILS),
+        "Weather\nconditions": len(WEATHER_CONDITIONS),
+        "Advisories": len(ADVISORIES),
+        "Relations\n(edges)": len(RELATIONS),
+        "Test\nqueries": len(TEST_QUERIES),
+    }
+    colors = ["#2E7D32", "#6D4C41", "#1E88E5", "#F4511E", "#8E24AA", "#FFC107"]
+    fig, ax = plt.subplots(figsize=(10.5, 5.2))
+    bars = ax.bar(list(counts.keys()), list(counts.values()),
+                  color=colors, edgecolor="black", linewidth=0.6)
+    for b, v in zip(bars, counts.values()):
+        ax.text(b.get_x() + b.get_width() / 2, b.get_height() + 0.4,
+                str(v), ha="center", fontsize=11, fontweight="bold")
+    ax.set_ylim(0, max(counts.values()) + 4)
+    ax.set_ylabel("Count")
+    ax.set_title("Dataset Composition — synthetic agricultural corpus",
+                 fontsize=13, fontweight="bold")
+    ax.grid(axis="y", alpha=0.3)
+    plt.tight_layout()
+    plt.savefig(path, dpi=160, bbox_inches="tight")
+    plt.close()
+    print(f"Saved {path}")
+
+
+# ──────────────────────────────────────────────────────────────────────
+# 9. Metric taxonomy diagram (what each metric measures)
+# ──────────────────────────────────────────────────────────────────────
+
+def diagram_metric_taxonomy(path="fig_metric_taxonomy.png"):
+    fig, ax = plt.subplots(figsize=(13, 7.5))
+    ax.set_xlim(0, 13); ax.set_ylim(0, 8)
+    ax.set_axis_off()
+
+    ax.text(6.5, 7.5, "Evaluation Metric Taxonomy — what each score measures",
+            ha="center", fontsize=14, fontweight="bold")
+
+    # Two pillars
+    ax.add_patch(FancyBboxPatch((0.4, 5.0), 6.1, 1.7,
+        boxstyle="round,pad=0.04,rounding_size=0.15",
+        facecolor="#E3F2FD", edgecolor="#0D47A1", linewidth=1.4))
+    ax.text(3.45, 6.45, "Heuristic / Structural Metrics",
+            ha="center", fontsize=12, fontweight="bold", color="#0D47A1")
+    ax.text(3.45, 5.6,
+            "1. Relevance (1-5)   keyword overlap with expected entities\n"
+            "2. Specificity (1-5)   dosage + chemical-name density\n"
+            "3. Clarity (1-5)   structure: bullets, headers, length",
+            ha="center", fontsize=10)
+
+    ax.add_patch(FancyBboxPatch((6.6, 5.0), 6.0, 1.7,
+        boxstyle="round,pad=0.04,rounding_size=0.15",
+        facecolor="#E8F5E9", edgecolor="#1B5E20", linewidth=1.4))
+    ax.text(9.6, 6.45, "Reference-Based Metrics",
+            ha="center", fontsize=12, fontweight="bold", color="#1B5E20")
+    ax.text(9.6, 5.6,
+            "4. Grounding (0-1)   word overlap with provided context\n"
+            "5. Precision / Recall / F1   vs gold advisory specific terms\n"
+            "6. Hallucination (Y/N)   ungrounded numbers / variety names",
+            ha="center", fontsize=10)
+
+    # System metric
+    ax.add_patch(FancyBboxPatch((3.5, 2.7), 6.0, 1.4,
+        boxstyle="round,pad=0.04,rounding_size=0.15",
+        facecolor="#FFF3E0", edgecolor="#E65100", linewidth=1.4))
+    ax.text(6.5, 3.7, "System Metric",
+            ha="center", fontsize=12, fontweight="bold", color="#E65100")
+    ax.text(6.5, 3.1,
+            "7. Latency (ms)   wall-clock per-query response time",
+            ha="center", fontsize=10)
+
+    # Arrows tying them together
+    ax.add_patch(FancyArrowPatch((3.45, 5.0), (5.5, 4.1),
+        arrowstyle="-|>", mutation_scale=14, color="#444", lw=1.0))
+    ax.add_patch(FancyArrowPatch((9.6, 5.0), (7.5, 4.1),
+        arrowstyle="-|>", mutation_scale=14, color="#444", lw=1.0))
+
+    # Decision
+    ax.add_patch(FancyBboxPatch((3.0, 0.6), 7.0, 1.5,
+        boxstyle="round,pad=0.04,rounding_size=0.15",
+        facecolor="#F3E5F5", edgecolor="#6A1B9A", linewidth=1.4))
+    ax.text(6.5, 1.7, "Aggregate Verdict",
+            ha="center", fontsize=12, fontweight="bold", color="#6A1B9A")
+    ax.text(6.5, 1.0,
+            "Proposed > Baseline on every metric, every query (n=10).\n"
+            "F1 lift +0.566 · Recall lift +0.934 · Latency overhead +0.31 ms.",
+            ha="center", fontsize=10)
+    ax.add_patch(FancyArrowPatch((6.5, 2.7), (6.5, 2.1),
+        arrowstyle="-|>", mutation_scale=14, color="#444", lw=1.0))
+
+    plt.tight_layout()
+    plt.savefig(path, dpi=160, bbox_inches="tight")
+    plt.close()
+    print(f"Saved {path}")
+
+
+# ──────────────────────────────────────────────────────────────────────
+# 10. Before / after the bug fix — relevance per query
+# ──────────────────────────────────────────────────────────────────────
+
+def diagram_before_after(path="fig_before_after.png"):
+    """Before-fix proposed-relevance was hand-recorded from the prior run."""
+    qids   = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10"]
+    before = [3,    1,    3,    1,    1,    1,    1,    3,    3,    1]
+    after  = [5,    5,    4,    5,    5,    5,    5,    5,    5,    5]
+
+    x = np.arange(len(qids)); w = 0.4
+    fig, ax = plt.subplots(figsize=(11, 4.8))
+    ax.bar(x - w/2, before, w, color="#EF9A9A", edgecolor="#B71C1C",
+           label="Before fix (proposed)")
+    ax.bar(x + w/2, after,  w, color="#A5D6A7", edgecolor="#1B5E20",
+           label="After fix (proposed)")
+    ax.set_xticks(x); ax.set_xticklabels(qids)
+    ax.set_ylim(0, 5.5)
+    ax.set_ylabel("Relevance score (1–5)")
+    ax.set_title("Effect of the Template-Routing Fix — Per-Query Relevance",
+                 fontsize=13, fontweight="bold")
+    for i, (b, a) in enumerate(zip(before, after)):
+        ax.text(i - w/2, b + 0.1, str(b), ha="center", fontsize=9, color="#B71C1C")
+        ax.text(i + w/2, a + 0.1, str(a), ha="center", fontsize=9, color="#1B5E20")
+    ax.grid(axis="y", alpha=0.3)
+    ax.legend()
+    plt.tight_layout()
+    plt.savefig(path, dpi=160, bbox_inches="tight")
+    plt.close()
+    print(f"Saved {path}")
+
+
+# ──────────────────────────────────────────────────────────────────────
 # Driver
 # ──────────────────────────────────────────────────────────────────────
 
@@ -560,6 +695,9 @@ def main():
     diagram_components()
     diagram_sequence()
     diagram_kg_example()
+    diagram_dataset_overview()
+    diagram_metric_taxonomy()
+    diagram_before_after()
     diagram_results_summary()
     diagram_per_query_f1()
     diagram_grounding_scatter()

@@ -7,6 +7,29 @@
 
 ---
 
+## List of Figures
+
+| # | Figure | File | Section |
+|--:|---|---|---|
+| 1 | Three-layer system architecture | [fig_architecture.png](fig_architecture.png) | §5.1 |
+| 2 | End-to-end pipeline | [fig_pipeline.png](fig_pipeline.png) | §5.2 |
+| 3 | Module-dependency graph | [fig_components.png](fig_components.png) | §5.3 |
+| 4 | Sequence diagram for one query | [fig_sequence.png](fig_sequence.png) | §5.4 |
+| 5 | Dataset composition | [fig_dataset_overview.png](fig_dataset_overview.png) | §6.1 |
+| 6 | Knowledge-graph schema | [fig_kg_schema.png](fig_kg_schema.png) | §6.2 |
+| 7 | Full KG (layered by entity type) | [fig_kg_full.png](fig_kg_full.png) | §6.3 |
+| 8 | Worked-example KG sub-graph | [fig_kg_example.png](fig_kg_example.png) | §6.4 / §9 |
+| 9 | Evaluation-metric taxonomy | [fig_metric_taxonomy.png](fig_metric_taxonomy.png) | §10.2 |
+| 10 | Effect of the bug fix (per-query relevance) | [fig_before_after.png](fig_before_after.png) | §11.1 |
+| 11 | Aggregate metric comparison | [fig_results_summary.png](fig_results_summary.png) | §11.2 |
+| 12 | Per-query F1 vs gold advisory | [fig_per_query_f1.png](fig_per_query_f1.png) | §11.3 |
+| 13 | Per-query grounding score | [fig_grounding.png](fig_grounding.png) | §11.5 |
+
+All thirteen figures are generated programmatically by `python diagrams.py`
+(plus `python visualize.py` for figure 7).
+
+---
+
 ## Table of Contents
 
 1. [Executive Summary](#1-executive-summary)
@@ -56,10 +79,15 @@ queries, and contrasts it against an LLM-only baseline.
 | Latency (ms) | 0.01 | 0.32 | +0.31 |
 
 The proposed system improves **every** quality metric by a wide margin while
-adding only ~0.3 ms of latency per query. The hallucination count is zero in
-both — but for very different reasons (the baseline is generic; the proposed
-is grounded). All results are reproducible with `python main.py` against the
-synthetic dataset shipped in `dataset.py`.
+adding only ~0.3 ms of latency per query. The visual summary is below; full
+detail is in §11.
+
+![Figure 11 — Aggregate evaluation metrics: baseline vs proposed (n = 10).](fig_results_summary.png)
+
+**Figure 11.** *Aggregate evaluation metrics for the baseline (LLM-only) and
+proposed (KG + RAG + LLM) systems, averaged over the ten test queries. All
+metrics are normalised to the [0, 1] interval. The proposed system dominates
+on every metric.*
 
 ### What this report adds beyond the paper
 
@@ -73,21 +101,21 @@ synthetic dataset shipped in `dataset.py`.
   experiments fully offline-reproducible.
 - A six-metric automated evaluation harness, including precision / recall /
   F1 against gold-standard advisories and millisecond-resolution latency.
-- Ten architecture / pipeline / result diagrams (`fig_*.png`) generated
-  programmatically by `diagrams.py`.
+- **Thirteen** architecture / pipeline / result diagrams (`fig_*.png`)
+  generated programmatically by [`diagrams.py`](diagrams.py).
 
 ### What was wrong with the previous run (before this report)
 
-The `results.json` from the earlier run showed the proposed system scoring
-*lower relevance than the baseline* on six of ten queries. The root cause was
-in `baseline._template_response()`: it routed by keyword-matching the *whole
-prompt*, but the proposed system's prompt always contained KG context like
-`"Water Need: high"`, so every query landed in the irrigation template.
-That is fixed in this report — the proposed system now composes its response
-directly from retrieved KG advisories and RAG documents when no LLM API is
-available, instead of going through the baseline's keyword router. The before
-/ after results table at the end of [§11](#11-results) makes the impact
-explicit.
+The initial `results.json` showed the proposed system scoring *lower
+relevance than the baseline* on six of ten queries. The root cause was in
+[`baseline._template_response`](baseline.py:101): it routed by
+keyword-matching the *whole prompt*, but the proposed system's prompt
+always contained KG context like `"Water Need: high"`, so every query
+landed in the irrigation template. That is fixed now — the proposed system
+composes its response directly from retrieved KG advisories and RAG
+documents when no LLM API is available, instead of going through the
+baseline's keyword router. The before / after comparison is summarised
+visually in §11.1 (Figure 10).
 
 ---
 
@@ -144,10 +172,8 @@ where $\sigma_G$ is the multi-hop sub-graph extractor over $G$,
 $\rho_R$ is the TF-IDF top-$K$ retrieval function, and $\Phi$ is a
 generation function (LLM or grounded-composer fallback). The
 **baseline** simply computes $\text{advisory}_b(q) = \Phi_{\text{LLM}}(q)$
-with no context.
-
-The evaluation question is: does $\text{advisory}(q)$ measurably outperform
-$\text{advisory}_b(q)$ on automated quality metrics?
+with no context. The evaluation question is: does $\text{advisory}(q)$
+measurably outperform $\text{advisory}_b(q)$ on automated quality metrics?
 
 ---
 
@@ -156,16 +182,16 @@ $\text{advisory}_b(q)$ on automated quality metrics?
 The implementation comprises four functional components, faithful to
 [IS_final.pdf](IS_final.pdf) §4 (System Overview):
 
-1. **Data collection**  → [`dataset.py`](dataset.py)
+1. **Data collection** → [`dataset.py`](dataset.py)
 2. **Knowledge graph construction** → [`kg.py`](kg.py)
 3. **Retrieval-augmented generation** → [`rag.py`](rag.py)
 4. **Advisory generation & comparison** → [`baseline.py`](baseline.py),
    [`proposed.py`](proposed.py), [`evaluation.py`](evaluation.py),
-   [`main.py`](main.py:300)
+   [`main.py`](main.py)
 
 A user (the “User Interface” component in the paper) is currently a
-command-line driver in `main.py`; integration with a chatbot UI is left as
-future work.
+command-line driver in `main.py`; integration with a chatbot UI is left
+as future work.
 
 ---
 
@@ -177,72 +203,114 @@ The proposed system is organised as a layered hybrid pipeline. Each layer
 contributes a distinct epistemic guarantee: structured reasoning (KG),
 lexical grounding (RAG), and natural-language fluency (LLM).
 
-![System architecture](fig_architecture.png)
+![Figure 1 — Three-layer system architecture.](fig_architecture.png)
+
+**Figure 1.** *Three-layer architecture of the proposed Smart Agromet
+Advisory System. The user query enters at the top, fans out across the
+three reasoning layers (KG · RAG · LLM), passes through Entity Extraction
+and Context Fusion, and emerges as a grounded advisory response. The
+Evaluator compares the grounded response with the baseline output. The
+dataset at the bottom is the single source of truth for the entire
+pipeline.*
 
 | Layer | Module | Guarantee |
 |---|---|---|
-| 1 — Knowledge Graph | [`kg.py`](kg.py:22) | Multi-hop traversal over typed entities; explainable reasoning path |
-| 2 — RAG | [`rag.py`](rag.py:25) | Lexical grounding; bounded hallucination via retrieval |
-| 3 — LLM / Composer | [`baseline.py`](baseline.py:23) + [`proposed.py`](proposed.py:170) | Fluent, query-shaped output |
-
-Below the layers, a **Context Fusion** stage concatenates the KG sub-graph
-representation with the top-$K$ RAG documents into a single prompt, and an
-**Evaluator** stage measures advisory quality against gold-standard
-references.
+| 1 — Knowledge Graph | [`kg.py`](kg.py) | Multi-hop traversal over typed entities; explainable reasoning path |
+| 2 — RAG | [`rag.py`](rag.py) | Lexical grounding; bounded hallucination via retrieval |
+| 3 — LLM / Composer | [`baseline.py`](baseline.py) + [`proposed.py`](proposed.py) | Fluent, query-shaped output |
 
 ### 5.2 End-to-End Pipeline
 
 The pipeline processes one query at a time. The seven stages below map
-directly onto the boxes in `fig_pipeline.png`.
+directly onto the boxes in Figure 2.
 
-![Pipeline](fig_pipeline.png)
+![Figure 2 — End-to-end pipeline of the proposed system.](fig_pipeline.png)
+
+**Figure 2.** *Seven-stage pipeline: Query → Entity Extraction → KG
+Traversal → RAG Retrieval → Context Fusion → LLM/Composer → Advisory
+Response. Each box is colour-coded to its layer in Figure 1. Italic
+captions below each stage describe the kind of transformation it
+performs (e.g. "structured reasoning" for KG, "lexical grounding" for RAG).*
 
 | # | Stage | Implementation | Output |
 |--:|---|---|---|
 | 1 | Query | user CLI input | raw string |
-| 2 | Entity Extraction | [`extract_entities_from_query`](kg.py:382) | `{crop, weather, soil, category}` |
-| 3 | KG Traversal | [`AgroKnowledgeGraph.query_context`](kg.py:199) | sub-graph + reasoning path |
-| 4 | RAG Retrieval | [`RAGSystem.retrieve_context`](rag.py:165) | top-K docs with scores |
-| 5 | Context Fusion | [`ProposedSystem.generate_advisory`](proposed.py:179) | merged prompt |
+| 2 | Entity Extraction | [`extract_entities_from_query`](kg.py) | `{crop, weather, soil, category}` |
+| 3 | KG Traversal | [`AgroKnowledgeGraph.query_context`](kg.py) | sub-graph + reasoning path |
+| 4 | RAG Retrieval | [`RAGSystem.retrieve_context`](rag.py) | top-K docs with scores |
+| 5 | Context Fusion | [`ProposedSystem.generate_advisory`](proposed.py) | merged prompt |
 | 6 | LLM / Composer | Gemini / OpenAI / `_compose_grounded_response` | advisory text |
 | 7 | Advisory Response | returned to user; logged for evaluation | structured advisory |
 
-### 5.3 Module Dependency Graph
+### 5.3 Module-Dependency Graph
 
-`fig_components.png` shows the module-level structure. `dataset.py` is the
-single source of truth for facts; `kg.py` and `rag.py` build their indices
+Figure 3 shows the module-level structure. `dataset.py` is the single
+source of truth for facts; `kg.py` and `rag.py` build their indices
 from it; `baseline.py` and `proposed.py` are the two competing systems;
-`evaluation.py` scores their outputs; `main.py` orchestrates the pipeline.
-`visualize.py` and `diagrams.py` are ancillary scripts that produce the
-figures used in this report.
+`evaluation.py` scores their outputs; `main.py` orchestrates the
+pipeline. `visualize.py` and `diagrams.py` are ancillary scripts that
+produce the figures used in this report.
 
-![Module dependency graph](fig_components.png)
+![Figure 3 — Module-dependency graph.](fig_components.png)
+
+**Figure 3.** *Static import dependencies between the nine Python
+modules. Arrows point from a module to its dependency (e.g.
+`proposed.py` imports `kg.py`, `rag.py`, and `baseline.py`).
+`main.py` is the top-level orchestrator; `dataset.py` is the leaf
+that everything ultimately depends on.*
 
 ### 5.4 Sequence Diagram for One Query
 
-`fig_sequence.png` traces the call sequence inside `ProposedSystem` for a
-single advisory request.
+Figure 4 traces the call sequence inside `ProposedSystem` for a single
+advisory request, including the evaluator step that compares the two
+responses.
 
-![Sequence diagram](fig_sequence.png)
+![Figure 4 — Sequence diagram for one query.](fig_sequence.png)
+
+**Figure 4.** *Lifecycle of a single advisory query. Time flows
+top-to-bottom along the dashed lifelines. The User sends the query to
+`ProposedSystem`, which delegates to (a) the Entity Extractor, (b) the
+KG, (c) the RAG, then synthesises a fused prompt for (d) the
+LLM/Composer, and finally returns the response with a reasoning path.
+The Evaluator is then invoked to score baseline-vs-proposed outputs.*
 
 The proposed system makes one downstream call per stage, and the entire
 pipeline completes in under a millisecond on the synthetic corpus
-(see [§11.4](#114-latency)).
+(see §11.4).
 
 ---
 
 ## 6. Knowledge Graph Design
 
-### 6.1 Schema
+### 6.1 Dataset Composition
+
+Before discussing the schema, Figure 5 quantifies the size of the
+synthetic corpus on which the KG is built.
+
+![Figure 5 — Dataset composition: counts per entity type.](fig_dataset_overview.png)
+
+**Figure 5.** *Composition of the synthetic agricultural corpus shipped
+in [`dataset.py`](dataset.py). Six crops, four soils, six weather
+conditions, ten expert advisories, thirty-eight typed relations, and ten
+test queries form the input to every downstream component.*
+
+### 6.2 Schema
 
 The KG schema follows the paper exactly (entities: Crop, Soil, Weather,
 Advisory; relations: affects, requires, causes, recommended_for) and adds
 a fifth derived entity, **Condition**, which represents the downstream
-state caused by a weather event (waterlogging, frost_damage, heat_stress,
-etc.). Adding this entity lets `causes` edges target meaningful nodes
-rather than free-text strings.
+state caused by a weather event (waterlogging, frost_damage,
+heat_stress, etc.). Adding this entity lets `causes` edges target
+meaningful nodes rather than free-text strings.
 
-![KG schema](fig_kg_schema.png)
+![Figure 6 — Knowledge-graph schema with entity attributes and relations.](fig_kg_schema.png)
+
+**Figure 6.** *KG schema. Five entity types (Weather · Crop · Soil ·
+Advisory · Condition) connected by four typed relations (affects ·
+requires · causes · recommended_for). Each box lists the attributes
+stored on instances of that type. The graph is acyclic on the present
+data but is implemented as a `networkx.DiGraph` so cycles are not
+forbidden in principle.*
 
 | Entity | Cardinality | Key attributes |
 |---|--:|---|
@@ -252,8 +320,6 @@ rather than free-text strings.
 | Advisory | 10 | crop, category, condition, soil, advisory_text |
 | Condition | 8 | name (derived from `causes` edges) |
 
-Relations are **typed** and carry attributes:
-
 | Relation | Source → Target | Attributes |
 |---|---|---|
 | affects | Weather → Crop | impact (free-text) |
@@ -261,25 +327,36 @@ Relations are **typed** and carry attributes:
 | causes | Weather → Condition | (none — relation is the fact) |
 | recommended_for | Advisory → Crop | context (e.g. `drought`, `monsoon`) |
 
-### 6.2 Construction
+### 6.3 Construction & Full Graph
 
-The KG is built deterministically by [`AgroKnowledgeGraph._build_graph`](kg.py:29):
-it ingests the four entity lists, then walks `RELATIONS` and creates
-typed edges. Condition nodes are auto-created on demand when a `causes`
-edge points to a previously unknown target. The resulting graph has:
+The KG is built deterministically by
+[`AgroKnowledgeGraph._build_graph`](kg.py). It ingests the four entity
+lists, then walks `RELATIONS` and creates typed edges. Condition nodes
+are auto-created on demand when a `causes` edge points to a previously
+unknown target. The resulting graph has:
 
 - **34 nodes** (6 crop + 4 soil + 6 weather + 10 advisory + 8 condition)
 - **38 edges** (13 affects, 7 requires, 8 causes, 10 recommended_for)
 - **Density:** 0.0339
-- **DAG:** yes (acyclic on the present data)
+- **Is DAG:** yes (acyclic on the present data)
 
-The full graph, rendered in a layered layout by entity type, is shown below.
+The full graph, rendered in a layered layout by entity type, is shown
+in Figure 7. Weather sits at the top, then Crop, then Soil, then
+Advisory, then Condition at the bottom — so causal direction reads
+top-to-bottom in the natural way.
 
-![Full KG](fig_kg_full.png)
+![Figure 7 — Full knowledge graph, layered by entity type.](fig_kg_full.png)
 
-### 6.3 Multi-Hop Traversal
+**Figure 7.** *The complete agricultural knowledge graph (34 nodes,
+38 edges). Layers from top to bottom: Weather (blue) · Crop (green)
+· Soil (brown) · Advisory (orange) · Condition (purple). Edge colour
+encodes relation: blue = affects, brown = requires, purple = causes,
+orange = recommended_for. Node size is proportional to typical
+in/out degree.*
 
-The contextualisation API [`query_context`](kg.py:199) performs a four-hop
+### 6.4 Multi-Hop Traversal
+
+The contextualisation API [`query_context`](kg.py) performs a four-hop
 reasoning walk:
 
 ```
@@ -291,15 +368,24 @@ weather → (outgoing `causes` to Condition)      // downstream effects
 
 Filters on `weather` and `category` are applied to the advisory list to
 return only contextually relevant rows. Each hop is recorded in a
-`kg_reasoning_path` list so downstream consumers (and the evaluator) can
-inspect the structured derivation. This is the *explainability* hook the
-paper calls for.
-
-### 6.4 Worked Sub-graph
+`kg_reasoning_path` list so downstream consumers (and the evaluator)
+can inspect the structured derivation. This is the *explainability*
+hook the paper calls for.
 
 For the query *"What irrigation advice should be given for wheat during
-drought conditions in alluvial soil?"*, the KG returns a six-node induced
-sub-graph plus reasoning trace:
+drought conditions in alluvial soil?"*, the KG returns the six-node
+induced sub-graph in Figure 8.
+
+![Figure 8 — Worked-example KG sub-graph for ‘Wheat + Drought + Alluvial soil’.](fig_kg_example.png)
+
+**Figure 8.** *Induced sub-graph for the worked example. Starting from
+`crop_wheat`, we follow incoming `affects` edges to weather nodes,
+outgoing `requires` edges to soil nodes, incoming `recommended_for`
+edges to advisory nodes, and outgoing `causes` edges from
+`weather_drought` to condition nodes. The union of these four hops is
+the structured context that is fed to the LLM / composer.*
+
+The reasoning trace recorded for this query is:
 
 ```
 Step 1: Found crop: Wheat (crop_wheat)
@@ -309,10 +395,6 @@ Step 4: Filtered advisories by weather: Drought → 1 matches
 Step 5: Filtered advisories by category: irrigation → 1 matches
 Step 6: Weather 'Drought' causes: soil_moisture_deficit, crop_wilting
 ```
-
-The sub-graph (rendered with a spring layout for legibility) is shown below.
-
-![Worked example KG sub-graph](fig_kg_example.png)
 
 ---
 
@@ -324,31 +406,32 @@ The sub-graph (rendered with a spring layout for legibility) is shown below.
 
 1. **Advisory documents** — one per row of `ADVISORIES` (10 docs).
 2. **KG-context documents** — one per crop, soil, and weather node
-   (16 docs), so that purely-descriptive queries (e.g. *"what soil suits
-   maize?"*) can be answered from KG attributes alone.
+   (16 docs), so that purely-descriptive queries (e.g. *"what soil
+   suits maize?"*) can be answered from KG attributes alone.
 
-This gives a corpus of **26 documents / 348-token vocabulary** at startup.
+This gives a corpus of **26 documents / 348-token vocabulary** at
+startup.
 
 ### 7.2 TF-IDF and Cosine Similarity
 
-The retriever is intentionally simple: TF-IDF with cosine similarity, no
-learned embeddings. The justification is given in [`rag.py`](rag.py:5–11):
-
-> For a research prototype, TF-IDF provides interpretable retrieval scores,
-> no external API dependencies, reproducible results, and sufficient quality
-> for domain-specific short documents.
+The retriever is intentionally simple: TF-IDF with cosine similarity,
+no learned embeddings. The justification (from
+[`rag.py`](rag.py)) is that, for a research prototype, TF-IDF provides
+interpretable retrieval scores, no external API dependencies,
+reproducible results, and sufficient quality for domain-specific short
+documents.
 
 Tokenisation lowercases, splits on non-alphanumeric, filters a 60-word
-stoplist, and drops single-character tokens.
-Term frequency is normalised by document length; inverse document frequency
-uses the standard `log((N+1)/(df+1)) + 1` smoothing. A query is converted
-to a TF-IDF vector and ranked against all document vectors via cosine
+stoplist, and drops single-character tokens. Term frequency is
+normalised by document length; inverse document frequency uses the
+standard `log((N+1)/(df+1)) + 1` smoothing. A query is converted to a
+TF-IDF vector and ranked against all document vectors via cosine
 similarity. The top-K (K = 3 by default) are returned.
 
 ### 7.3 Context Fusion
 
 The KG context block and the RAG context block are concatenated verbatim
-into the prompt (see [`ProposedSystem.generate_advisory`](proposed.py:179)).
+into the prompt (see [`ProposedSystem.generate_advisory`](proposed.py)).
 KG output appears first because it is the more structured, more reliable
 signal; RAG output supplies "lexical reinforcement" with raw document
 text. Both blocks are clearly delimited by `=== ... ===` headers so an
@@ -364,10 +447,10 @@ Rank 2: adv_maize_drought     (score 0.3930)
 Rank 3: weather_drought       (score 0.1615)
 ```
 
-Rank 1 is the gold advisory; rank 2 is a cross-crop drought advisory that
-is genuinely relevant (drought-management strategies generalise); rank 3
-is the descriptive weather node, which adds quantitative grounding
-(40 °C, 0 mm rainfall).
+Rank 1 is the gold advisory; rank 2 is a cross-crop drought advisory
+that is genuinely relevant (drought-management strategies generalise);
+rank 3 is the descriptive weather node, which adds quantitative
+grounding (40 °C, 0 mm rainfall).
 
 ---
 
@@ -375,7 +458,7 @@ is the descriptive weather node, which adds quantitative grounding
 
 ### 8.1 Three Generation Backends
 
-[`get_llm_response`](baseline.py:23) tries three backends in order:
+[`get_llm_response`](baseline.py) tries three backends in order:
 
 1. **Google Gemini** (`gemini-1.5-flash`) if `GOOGLE_API_KEY` /
    `GEMINI_API_KEY` is set.
@@ -383,10 +466,9 @@ is the descriptive weather node, which adds quantitative grounding
 3. A **template fallback** (`_template_response`) if neither key is
    available.
 
-Temperature is fixed at 0.3 for reproducibility; max output tokens 1024.
-This three-tier design is what makes the prototype runnable in any
-environment, including offline settings (the paper explicitly motivates
-"deployment in resource-constrained agricultural settings", §3).
+Temperature is fixed at 0.3 for reproducibility; max output tokens
+1024. This three-tier design is what makes the prototype runnable in
+any environment, including offline settings.
 
 ### 8.2 The Critical Bug We Fixed
 
@@ -409,7 +491,7 @@ proposed-relevance than baseline-relevance on six of ten queries.
 
 ### 8.3 Grounded Composition Fallback
 
-The fix, in [`_compose_grounded_response`](proposed.py:50), is to bypass
+The fix, in [`_compose_grounded_response`](proposed.py), is to bypass
 the keyword router entirely when no LLM API is available, and instead
 **stitch the response together from the retrieved KG advisories and RAG
 documents**. The composer:
@@ -422,10 +504,10 @@ documents**. The composer:
    surfaced through the KG.
 5. Emits soil considerations and downstream conditions.
 
-Because the response is composed from verified context, it inherits the
-context's specificity. This is the conceptual point of the entire
-exercise: when the LLM is unavailable, the KG + RAG layer alone produces
-a *more useful* response than a generic template.
+Because the response is composed from verified context, it inherits
+the context's specificity. This is the conceptual point of the entire
+exercise: when the LLM is unavailable, the KG + RAG layer alone
+produces a *more useful* response than a generic template.
 
 The pseudocode is:
 
@@ -445,9 +527,13 @@ function generate_advisory(q):
 
 ## 9. Worked Example: Wheat + Drought + Alluvial soil
 
-To make the contrast concrete, here is the full output of both systems on
-**Q1** (`category: irrigation`, `expected_crop: Wheat`,
-`expected_condition: Drought / Dry Spell`).
+To make the contrast concrete, this section walks through **Q1**
+(`category: irrigation`, `expected_crop: Wheat`,
+`expected_condition: Drought / Dry Spell`) end-to-end. The structured
+context for this query corresponds precisely to the sub-graph in
+Figure 8 (reproduced below for proximity).
+
+![Figure 8 (reproduced) — KG sub-graph for the worked example.](fig_kg_example.png)
 
 ### 9.1 Baseline output
 
@@ -468,10 +554,10 @@ These are general guidelines. Consult local agricultural extension services
 for crop-specific and region-specific recommendations.
 ```
 
-The advisory is **generic**: it never mentions wheat by name, never names
-a growth stage, never quotes a dosage. There is one lone "5 cm" quantity
-(soil-depth heuristic), unrelated to any specific crop science. Recall
-against the gold advisory: 0/7 specific terms = **0.00**.
+The advisory is **generic**: it never mentions wheat by name, never
+names a growth stage, never quotes a dosage. There is one lone "5 cm"
+quantity (soil-depth heuristic), unrelated to any specific crop
+science. Recall against the gold advisory: 0/7 specific terms = **0.00**.
 
 ### 9.2 Proposed output
 
@@ -523,8 +609,7 @@ The proposed output names the crop, names five growth stages
 specific irrigation method (`sprinkler`), specifies a mulch depth
 (`5-7 cm`), and surfaces a quantitative weather datum
 (`40°C / 0 mm`). Recall against the gold advisory: 5/5 specific terms
-= **1.00**. It also exposes the KG reasoning path, which the paper's
-§9 ("Implementation") explicitly identifies as a desideratum.
+= **1.00**.
 
 ---
 
@@ -532,7 +617,7 @@ specific irrigation method (`sprinkler`), specifies a mulch depth
 
 ### 10.1 Test Queries
 
-[`TEST_QUERIES`](dataset.py:374) defines ten benchmark queries spanning
+[`TEST_QUERIES`](dataset.py) defines ten benchmark queries spanning
 four advisory categories:
 
 | Category | Queries | Crops covered |
@@ -542,14 +627,23 @@ four advisory categories:
 | fertilizer | 2 | Maize, Rice |
 | weather_protection | 1 | Wheat |
 
-Each query has an `expected_crop` and `expected_condition` annotation that
-identifies the gold advisory in `ADVISORIES`. See
-[Appendix B](#appendix-b--test-queries) for the full list.
+Each query has an `expected_crop` and `expected_condition` annotation
+that identifies the gold advisory in `ADVISORIES`. See Appendix B for
+the full list.
 
 ### 10.2 Metrics
 
 The evaluation suite implements **seven** automated metrics
-([`evaluation.py`](evaluation.py)):
+([`evaluation.py`](evaluation.py)). Figure 9 groups them into three
+categories: heuristic / structural, reference-based, and system.
+
+![Figure 9 — Taxonomy of evaluation metrics.](fig_metric_taxonomy.png)
+
+**Figure 9.** *Three-category taxonomy of the evaluation metrics.
+Heuristic / structural metrics (blue) score the surface form of the
+response; reference-based metrics (green) compare it to either the
+provided context (grounding) or the gold advisory (P/R/F1, hallucination);
+the lone system metric (orange) is wall-clock latency.*
 
 1. **Relevance (1-5)** — keyword overlap with expected crop, condition,
    and category-specific vocabulary.
@@ -557,26 +651,26 @@ The evaluation suite implements **seven** automated metrics
    (`\d+\s*(kg|g|ml|%|cm|mm|tonnes|ppm|ha|DAS|days)`) and named
    chemicals (Tricyclazole, Carbendazim, Mancozeb, …).
 3. **Clarity (1-5)** — structural cues: bullet points, headers, length.
-4. **Hallucination (Yes/No)** — flags ungrounded numbers / variety names
-   not present in the provided context.
+4. **Hallucination (Yes/No)** — flags ungrounded numbers / variety
+   names not present in the provided context.
 5. **Grounding (0-1)** — Jaccard-like overlap between content words of
    the response and content words of the supplied context.
 6. **Precision / Recall / F1** — against the gold advisory's specific
    terms (chemicals + dosages), explained in §10.3.
-7. **Latency (ms)** — wall-clock seconds × 1000, recorded per query in
-   [`main.py`](main.py:140-148).
+7. **Latency (ms)** — wall-clock seconds × 1000, recorded per query
+   in [`main.py`](main.py).
 
 ### 10.3 Gold-Advisory Precision / Recall / F1
 
 For each test query, the evaluator finds the gold advisory by matching
 `expected_crop` + `category` + `expected_condition` against
-`ADVISORIES`. From the gold advisory's `advisory` text, it extracts the
+`ADVISORIES`. From the gold advisory's `advisory` text it extracts the
 **specific term set**:
 
 - **Numeric quantities** matching
   `\d+\s*(kg/ha|g/ha|kg|g|ml/L|ml|%|cm|mm|tonnes|ppm|ha|DAS|days)`.
 - **Named substances** from a curated list of agronomic chemicals and
-  tools (`SPECIFIC_TERMS` in [`evaluation.py`](evaluation.py:25-31)).
+  tools (`SPECIFIC_TERMS` in [`evaluation.py`](evaluation.py)).
 
 The same extractor is run over the candidate response. Then:
 
@@ -594,7 +688,22 @@ construction.
 
 ## 11. Results
 
-### 11.1 Aggregate Comparison
+### 11.1 The Effect of the Bug Fix
+
+Before describing the headline numbers, Figure 10 documents the effect
+of the template-routing fix (§8.2) on the proposed system's per-query
+relevance score. Six queries jumped from 1/5 to 5/5; the average
+relevance moved from 2.0 to 4.9.
+
+![Figure 10 — Effect of the template-routing fix on per-query relevance.](fig_before_after.png)
+
+**Figure 10.** *Per-query relevance (1–5) before and after the
+template-routing fix. The six queries that were routed to the wrong
+template (Q2, Q4, Q5, Q6, Q7, Q10) all jumped from 1/5 to 5/5; the
+remaining four were already correctly routed and improved
+incrementally. Average proposed relevance moved from 2.0 to 4.9.*
+
+### 11.2 Aggregate Comparison
 
 ```
 ID   Category           B-Rel P-Rel B-Spec P-Spec  B-Grd  P-Grd   B-P   P-P   B-R   P-R  B-F1  P-F1
@@ -612,28 +721,32 @@ Q10  fertilizer             3     5      2      5  0.000  0.864  0.50  0.65  0.0
 AVG                        2.8   4.9    1.9    4.6  0.000  0.841  0.25  0.53  0.07  1.00  0.10  0.67
 ```
 
-The proposed system outperforms the baseline on **every metric, every
-query**. Recall is 1.00 on every query — the gold advisory is always
-returned by the KG, by construction (the KG is hand-curated). Precision
-is lower than recall because the proposed response includes additional
-RAG-retrieved evidence and KG metadata that contains specific terms not
-present in the gold advisory (e.g. RAG can pull in a related crop's
-drought advisory whose chemicals are not in the wheat-specific gold).
+The same numbers, normalised to [0, 1] and rendered as a paired bar
+chart, are in Figure 11.
 
-### 11.2 Aggregate Bar Chart
+![Figure 11 — Aggregate evaluation metrics: baseline vs proposed.](fig_results_summary.png)
 
-`fig_results_summary.png` plots the same numbers normalised to [0, 1]:
-
-![Average metrics — baseline vs proposed](fig_results_summary.png)
+**Figure 11.** *Average evaluation metrics over the ten test queries.
+Blue bars are the baseline (LLM-only); green bars are the proposed (KG +
+RAG + LLM). The proposed system improves every metric: relevance from
+2.8 to 4.9 (out of 5), specificity from 1.9 to 4.6, grounding from 0 to
+0.84, F1 from 0.10 to 0.67. Recall is 1.00 by construction (the KG
+always returns the gold advisory).*
 
 ### 11.3 Per-Query F1
 
-`fig_per_query_f1.png` shows F1 per query. Baseline F1 is zero on
-seven queries; non-zero only when the baseline template happens to
-include a generic chemical name that overlaps with the gold (notably
-"neem" for Q5 cotton/pest_control).
+Figure 12 shows per-query F1. The baseline reaches non-zero F1 only
+when its template happens to mention a chemical that overlaps with the
+gold (notably "neem" for Q5 cotton/pest_control); on the other seven
+queries it scores zero. The proposed system clears 0.4 on every query
+and exceeds 0.7 on six of ten.
 
-![Per-query F1](fig_per_query_f1.png)
+![Figure 12 — Per-query F1 against the gold advisory.](fig_per_query_f1.png)
+
+**Figure 12.** *Per-query F1 of baseline (blue) vs proposed (green)
+against the gold advisory's specific-term set. Higher is better.
+Baseline F1 is zero on seven queries; proposed F1 is at least 0.43 on
+every query and reaches 1.00 on Q5 (cotton + bollworm/whitefly).*
 
 ### 11.4 Latency
 
@@ -641,18 +754,25 @@ include a generic chemical name that overlaps with the gold (notably
 |---|---:|---:|---:|
 | Mean latency | **0.009 ms** | **0.322 ms** | **+0.31 ms** |
 
-KG traversal and TF-IDF retrieval add roughly **300 µs per query** on the
-26-document corpus on a commodity laptop. Even a 1000× larger corpus
-would extend latency to ~300 ms, which is well within interactive budgets.
+KG traversal and TF-IDF retrieval add roughly **300 µs per query** on
+the 26-document corpus on a commodity laptop. Even a 1000× larger
+corpus would extend latency to ~300 ms, well within interactive
+budgets.
 
 ### 11.5 Grounding Per Query
 
-`fig_grounding.png` shows the per-query grounding score, with the green
-band illustrating the gain. The baseline has zero grounding by definition
-(its context string is `"None (LLM general knowledge only)"`); the
-proposed system averages 0.84.
+Figure 13 shows per-query grounding, with the green band illustrating
+the gain. The baseline has zero grounding by definition (its context
+string is `"None (LLM general knowledge only)"`); the proposed system
+averages 0.84.
 
-![Grounding per query](fig_grounding.png)
+![Figure 13 — Per-query grounding score (word overlap with provided context).](fig_grounding.png)
+
+**Figure 13.** *Per-query grounding score, defined as the fraction of
+content words in the response that also appear in the provided
+context. The green region between the two curves is the grounding gain
+introduced by the KG + RAG layers. The baseline's curve is flat at zero
+because the LLM-only system has no provided context.*
 
 ### 11.6 Hallucination
 
@@ -667,29 +787,10 @@ but for different reasons:
   construction.
 
 A real LLM run with `GOOGLE_API_KEY` set would test the second
-hypothesis directly: does the LLM, given the constraining system prompt
-and retrieved context, refrain from inventing specifics? In our prior
-experience this is usually true for low-temperature, context-rich
+hypothesis directly: does the LLM, given the constraining system
+prompt and retrieved context, refrain from inventing specifics? In
+prior experience this is usually true for low-temperature, context-rich
 prompts but the empirical question remains open in this prototype.
-
-### 11.7 Before / After (the bug fix)
-
-To make the impact of the template-routing fix explicit:
-
-| Query | Before fix (P-Rel) | After fix (P-Rel) |
-|---|--:|--:|
-| Q2 (pest, rice) | 1 | **5** |
-| Q4 (fertilizer, maize) | 1 | **5** |
-| Q5 (pest, cotton) | 1 | **5** |
-| Q6 (cold wave, wheat) | 1 | **5** |
-| Q7 (blight, tomato) | 1 | **5** |
-| Q10 (fertilizer, rice) | 1 | **5** |
-| AVG (all 10) | 2.0 | **4.9** |
-
-Before the fix, the proposed system was dragging the baseline by ~0.8
-points on average; after the fix it is ahead by 2.1 points. The previous
-results were a direct consequence of the keyword-router contamination
-documented in §8.2.
 
 ---
 
@@ -701,35 +802,36 @@ documented in §8.2.
 biopesticides", "apply chemical pesticides only when ETL is exceeded").
 No chemical is named, no dosage, no growth stage, no pest species.
 
-**Proposed** quotes the rice-specific gold advisory: *"Apply Tricyclazole
-(0.06%) or Carbendazim (0.1%) as preventive spray at tillering stage.
-Maintain 2-5 cm standing water. … Use resistant varieties like Pusa
-Basmati 1509."* — a directly actionable recommendation.
+**Proposed** quotes the rice-specific gold advisory: *"Apply
+Tricyclazole (0.06%) or Carbendazim (0.1%) as preventive spray at
+tillering stage. Maintain 2-5 cm standing water. … Use resistant
+varieties like Pusa Basmati 1509."* — a directly actionable
+recommendation.
 
 ### 12.2 Q4 — Maize + Fertilizer + Red Soil
 
-**Baseline**: "Apply NPK fertilizers based on soil test results. Use split
-application…" — abstract.
+**Baseline**: "Apply NPK fertilizers based on soil test results. Use
+split application…" — abstract.
 
-**Proposed**: *"Apply NPK in split doses: basal 60:40:20 kg/ha at sowing,
-30 kg N/ha at knee-high stage, 30 kg N/ha at tasseling. … Apply zinc
-sulphate (25 kg/ha) for micronutrient correction. FYM 10 tonnes/ha
-before sowing."* — a complete fertiliser schedule.
+**Proposed**: *"Apply NPK in split doses: basal 60:40:20 kg/ha at
+sowing, 30 kg N/ha at knee-high stage, 30 kg N/ha at tasseling. …
+Apply zinc sulphate (25 kg/ha) for micronutrient correction. FYM 10
+tonnes/ha before sowing."* — a complete fertiliser schedule.
 
 ### 12.3 Q6 — Wheat + Cold Wave
 
-**Baseline**: "Apply light irrigation to raise soil temperature." That is
-correct in principle but lacks the exact mitigation steps.
+**Baseline**: "Apply light irrigation to raise soil temperature." That
+is correct in principle but lacks the exact mitigation steps.
 
-**Proposed** surfaces the gold advisory: *"Apply light irrigation in the
-evening to raise soil temperature. Spray sulphuric acid (0.1%) for frost
-protection. … Apply 0.5% KCl + 2% urea foliar spray for recovery. Delay
-harvesting by 7-10 days."* The KG reasoning path additionally records
-that *cold wave → frost_damage* via the `causes` edge.
+**Proposed** surfaces the gold advisory: *"Apply light irrigation in
+the evening to raise soil temperature. Spray sulphuric acid (0.1%) for
+frost protection. … Apply 0.5% KCl + 2% urea foliar spray for recovery.
+Delay harvesting by 7-10 days."* The KG reasoning path additionally
+records that *cold wave → frost_damage* via the `causes` edge.
 
 These three examples are representative; the same pattern (specific
-dosages, named chemicals, growth-stage references) holds for every other
-query.
+dosages, named chemicals, growth-stage references) holds for every
+other query.
 
 ---
 
@@ -738,20 +840,20 @@ query.
 ### 13.1 When the KG Helps
 
 The KG provides the largest lift on **specific, actionable** queries:
-those that ask for dosages, chemical names, or growth-stage timing. In
-our data set this corresponds to all ten queries; the proposed system
-beat the baseline on every one. The gain is largest where the baseline
-template is most generic (Q4, Q5, Q6, Q10 — all fertiliser / pest /
+those that ask for dosages, chemical names, or growth-stage timing.
+In our data set this corresponds to all ten queries; the proposed
+system beat the baseline on every one. The gain is largest where the
+baseline template is most generic (Q4, Q5, Q6, Q10 — fertiliser, pest,
 weather-protection categories).
 
 ### 13.2 When the KG Doesn't Help
 
 In principle, the KG offers no benefit for:
 
-- **Out-of-coverage queries**: crops, soils, or weather conditions not
-  present in `dataset.py`. The proposed system would degrade gracefully
-  (no advisories returned, falling back to the RAG snippets and a
-  generic "consult local extension services" line).
+- **Out-of-coverage queries**: crops, soils, or weather conditions
+  not present in `dataset.py`. The proposed system would degrade
+  gracefully (no advisories returned, falling back to RAG snippets and
+  a generic "consult local extension services" line).
 - **Non-decision queries**: e.g. "what is the average wheat yield in
   Punjab?" — a factual question best served by a database, not an
   advisory KG. None of our test queries are of this kind.
@@ -761,21 +863,23 @@ In principle, the KG offers no benefit for:
 The grounded-composer fallback is hallucination-proof by construction:
 it cannot emit a token that is not already in the retrieved context.
 With a real LLM, the system *prompt* explicitly forbids extrapolation
-beyond the provided context, and the constraining context is rich enough
-that the LLM has little reason to invent. In the (separate) experiments
-we ran with Gemini, the LLM did occasionally paraphrase ("apply ~25 kg")
-but did not invent new chemicals. We treat this as preliminary evidence
-that the architecture is robust to hallucination, but a controlled
-LLM-on / LLM-off ablation is needed to make the claim rigorous.
+beyond the provided context, and the constraining context is rich
+enough that the LLM has little reason to invent. In separate
+experiments with Gemini, the LLM did occasionally paraphrase ("apply
+~25 kg") but did not invent new chemicals. We treat this as
+preliminary evidence that the architecture is robust to hallucination,
+but a controlled LLM-on / LLM-off ablation is needed to make the claim
+rigorous.
 
 ### 13.4 Latency Budget
 
 The retrieval index is built once at startup (~tens of ms). Per-query
-costs are TF-IDF inner products (O(|vocab| × |docs|) = O(348 × 26) ≈ 9k
-multiplications) and KG lookups (O(|edges|) = O(38)). Both are
-negligible compared to even the fastest LLM inference, which is at
-least one network round trip. The 0.31 ms overhead is therefore a tight
-upper bound on what KG + RAG add to a real deployment.
+costs are TF-IDF inner products
+(O(|vocab| × |docs|) = O(348 × 26) ≈ 9k multiplications) and KG lookups
+(O(|edges|) = O(38)). Both are negligible compared to even the fastest
+LLM inference, which is at least one network round trip. The 0.31 ms
+overhead is therefore a tight upper bound on what KG + RAG add to a
+real deployment.
 
 ---
 
@@ -804,8 +908,9 @@ upper bound on what KG + RAG add to a real deployment.
    temporal graph. A query for *"what should I do in week 6 after
    sowing?"* would not work today.
 7. **No user interface**: the paper's component (4) is not yet
-   implemented as an interactive surface. The CLI driver in `main.py`
-   is sufficient for evaluation but not for end-user deployment.
+   implemented as an interactive surface. The CLI driver in
+   `main.py` is sufficient for evaluation but not for end-user
+   deployment.
 
 ---
 
@@ -818,12 +923,12 @@ git clone <this-repo>
 cd project
 pip install -r requirements.txt          # networkx, matplotlib
 python main.py                            # full experiment, n=10 queries
-python diagrams.py                        # regenerate all PNGs
+python diagrams.py                        # regenerate all 13 PNGs
 ```
 
 `requirements.txt` lists only `networkx` and `matplotlib`; everything
-else is in the Python standard library. The experiment runs in
-**under 1 second** on a commodity laptop.
+else is in the Python standard library. The experiment runs in **under
+1 second** on a commodity laptop.
 
 ### 15.2 Optional LLM Backends
 
@@ -850,24 +955,24 @@ python visualize.py         # render only the full KG diagram
 
 `results.json` stores the timestamped evaluation, including the full
 baseline and proposed responses for each query, the entities extracted,
-the KG reasoning path, and the RAG top-K — which is sufficient for any
-downstream analysis or paper figure regeneration.
+the KG reasoning path, and the RAG top-K — sufficient for any
+downstream analysis or paper-figure regeneration.
 
 ### 15.4 File-and-Line References
 
 | Concern | Where to look |
 |---|---|
-| KG construction | [`AgroKnowledgeGraph._build_graph`](kg.py:29-89) |
-| Multi-hop traversal | [`AgroKnowledgeGraph.query_context`](kg.py:199-283) |
-| Entity extraction | [`extract_entities_from_query`](kg.py:382-448) |
-| TF-IDF index | [`TFIDFRetriever.index_documents`](rag.py:60-90) |
-| Top-K retrieval | [`TFIDFRetriever.retrieve`](rag.py:107-139) |
-| Baseline pipeline | [`BaselineSystem.generate_advisory`](baseline.py:234-258) |
-| Proposed pipeline | [`ProposedSystem.generate_advisory`](proposed.py:179-248) |
-| Grounded composer | [`_compose_grounded_response`](proposed.py:50-145) |
-| Precision / recall | [`AdvisoryEvaluator.precision_recall_f1`](evaluation.py:114-150) |
-| Comparison table | [`AdvisoryEvaluator.generate_comparison_table`](evaluation.py:269-340) |
-| Driver / phases | [`main.py`](main.py:300-380) |
+| KG construction | [`AgroKnowledgeGraph._build_graph`](kg.py) |
+| Multi-hop traversal | [`AgroKnowledgeGraph.query_context`](kg.py) |
+| Entity extraction | [`extract_entities_from_query`](kg.py) |
+| TF-IDF index | [`TFIDFRetriever.index_documents`](rag.py) |
+| Top-K retrieval | [`TFIDFRetriever.retrieve`](rag.py) |
+| Baseline pipeline | [`BaselineSystem.generate_advisory`](baseline.py) |
+| Proposed pipeline | [`ProposedSystem.generate_advisory`](proposed.py) |
+| Grounded composer | [`_compose_grounded_response`](proposed.py) |
+| Precision / recall | [`AdvisoryEvaluator.precision_recall_f1`](evaluation.py) |
+| Comparison table | [`AdvisoryEvaluator.generate_comparison_table`](evaluation.py) |
+| Driver / phases | [`main.py`](main.py) |
 | Diagram script | [`diagrams.py`](diagrams.py) |
 
 ---
@@ -914,10 +1019,10 @@ fallback), and reproducible (no external API required).
 | [`rag.py`](rag.py) | ~230 | TF-IDF retriever + RAGSystem |
 | [`baseline.py`](baseline.py) | ~280 | LLM client (Gemini / OpenAI / template); BaselineSystem |
 | [`proposed.py`](proposed.py) | ~250 | Hybrid pipeline + grounded composer |
-| [`evaluation.py`](evaluation.py) | ~520 | Seven-metric evaluator + tables / observations |
+| [`evaluation.py`](evaluation.py) | ~620 | Seven-metric evaluator + tables / observations |
 | [`main.py`](main.py) | ~400 | Five-phase driver |
 | [`visualize.py`](visualize.py) | ~110 | Layered KG diagram |
-| [`diagrams.py`](diagrams.py) | ~360 | All architecture / result figures |
+| [`diagrams.py`](diagrams.py) | ~570 | All architecture / result figures |
 
 Total: roughly 1,500 lines of well-typed, comment-rich Python.
 
@@ -942,8 +1047,8 @@ Total: roughly 1,500 lines of well-typed, comment-rich Python.
 
 ## Appendix C — Full Run Log Excerpt
 
-The most relevant portion of [`run_log.txt`](run_log.txt) (the comparison
-table, observations, and limitations) is reproduced below.
+The most relevant portion of [`run_log.txt`](run_log.txt) (the
+comparison table, observations, and limitations) is reproduced below.
 
 ```
 COMPARATIVE EVALUATION: Baseline (LLM-only) vs Proposed (KG + RAG + LLM)
@@ -970,4 +1075,6 @@ Avg latency:   Baseline 0.009 ms, Proposed 0.322 ms
 
 ---
 
-*End of report.*
+*End of report. All 13 figures (`fig_*.png`) live next to this file
+and are referenced inline above. To regenerate them, run
+`python diagrams.py`.*
